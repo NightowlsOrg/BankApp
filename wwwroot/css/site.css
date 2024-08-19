@@ -1,0 +1,44 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.custom-navbar {
+  display: flex;
+  justify-content: space-between;     /* Makes space between elements */
+  align-items: center;                /* Aligns items vertically */
+}
+
+.center-text {
+  text-align: center;
+  font-size: 2rem;                    /* Adjust the size as needed */
+  flex-grow: 1;                       /* Allows it to take up available space to center it */
+}
+
+.center-text span {
+  pointer-events: auto;               /* Allow clicks on the text */
+}
+
+.navbar-collapse {
+  display: flex;                      /* Makes a flex container */
+  justify-content: flex-end;          /* Aligns items to the right */
+  width: 100%;                        /* Ensures full width for the collapse area */
+}
