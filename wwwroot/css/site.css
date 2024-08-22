@@ -42,3 +42,14 @@ body {
   justify-content: flex-end;          /* Aligns items to the right */
   width: 100%;                        /* Ensures full width for the collapse area */
 }
+
+.navbar-brand {
+  position: absolute;
+  left: 50%;                          /* Centers the brand horizontally */
+  top: 50%;                           /* Centers the brand vertically */
+  transform: translate(-50%, -50%);   /* Centers the brand based on its own dimensions */
+  margin: 0;                          /* Reset any default margin */
+  padding: 0;                         /* Reset any padding */
+  line-height: normal;                /* Ensure line height is normal */
+  vertical-align: middle;             /* If necessary for inline elements */
+}
