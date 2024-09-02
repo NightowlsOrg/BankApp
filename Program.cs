@@ -1,7 +1,16 @@
+using BankApp.Application;
+using BankApp.Domain;
+using BankApp.Infrastructure;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+builder.Services.AddScoped<IKundService, KundService>();
+// builder.Services.AddScoped<IKundRepository, KundRepository>();      // Används för att läsa från en databas
+builder.Services.AddScoped<IKundRepository, KundRepositoryJson>();  // Används för att läsa från en JSON-fil (kunder.json)
 
 var app = builder.Build();
 
@@ -18,6 +27,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication(); // Before UseAuthorization()
 app.UseAuthorization();
 
 app.MapControllerRoute(

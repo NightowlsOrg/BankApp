@@ -34,6 +34,7 @@ body {
   display: flex;
   flex-direction: column;
 }
+
 header {
   background-image: url('/images/bank.jpg'); /* Aplica la imagen de fondo al header */
   background-size: cover; /* Asegura que la imagen cubra toda el área del header */
@@ -41,8 +42,8 @@ header {
   background-repeat: no-repeat; /* Evita la repetición de la imagen */
   border-bottom: none; /* Elimina el borde en la parte inferior del header */
   padding: 10px 0; /* Agrega un poco de espacio interno si es necesario */
-  
 }
+
 .custom-navbar {
   display: flex;
   justify-content: space-between; /* Hace espacio entre los elementos */
@@ -65,4 +66,14 @@ header {
   width: 100%; /* Asegura que tenga el ancho completo */
 }
 
+.navbar-brand {
+  position: absolute;
+  left: 50%; /* Centra la marca horizontalmente */
+  top: 50%; /* Centra la marca verticalmente */
+  transform: translate(-50%, -50%); /* Centra la marca basado en sus dimensiones */
+  margin: 0; /* Resetea cualquier margen por defecto */
+  padding: 0; /* Resetea cualquier padding por defecto */
+  line-height: normal; /* Asegura que la altura de línea sea normal */
+  vertical-align: middle; /* Alinea verticalmente si es necesario para elementos en línea */
+}
 

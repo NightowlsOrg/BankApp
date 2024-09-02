@@ -1,0 +1,71 @@
+@model BankApp.Models.Kund
+
+<br>
+<center>
+    <h4>Kundinformation</h4>
+</center>
+<br>
+<form asp-controller="minasidor" asp-action="kundinfo" method="post">
+    <div class="form-group">
+        <label for="Personnummer">Personnummer:</label>
+        <input type="text" class="form-control" id="Personnummer" asp-for="Personnummer" required />
+        <span asp-validation-for="Personnummer" class="text-danger"></span>
+    </div>
+<br>
+    <div class="form-group">
+            <label for="Förnamn">Förnamn:</label>
+            <input type="text" class="form-control" id="Förnamn" asp-for="Förnamn" required />
+            <span asp-validation-for="Förnamn" class="text-danger"></span>
+    </div>
+<br>
+    <div class="form-group">
+            <label for="Efternamn">Efternamn:</label>
+            <input type="text" class="form-control" id="Efternamn" asp-for="Efternamn" required />
+            <span asp-validation-for="Efternamn" class="text-danger"></span>
+        <p></p>
+    </div>
+<br>
+    <div class="form-group">
+            <label for="Adress">Adress:</label>
+            <input type="text" class="form-control" id="Adress" asp-for="Adress" required />
+            <span asp-validation-for="Adress" class="text-danger"></span>
+        <p></p>
+    </div>
+<br>
+    <div class="form-group">
+            <label for="Postnummer">Postnummer:</label>
+            <input type="text" class="form-control" id="Postnummer" asp-for="Postnummer" required />
+            <span asp-validation-for="Postnummer" class="text-danger"></span>
+        <p></p>
+    </div>
+<br>
+    <div class="form-group">
+            <label for="Postort">Postort:</label>
+            <input type="text" class="form-control" id="Postort" asp-for="Postort" required />
+            <span asp-validation-for="Postort" class="text-danger"></span>
+        <p></p>
+    </div>
+<br>
+    <div class="form-group">
+            <label for="Tele">Tele:</label>
+            <input type="text" class="form-control" id="Tele" asp-for="Tele" required />
+            <span asp-validation-for="Tele" class="text-danger"></span>
+        <p></p>
+    </div>
+<br>
+    <div class="form-group">
+            <label for="Epost">Epost:</label>
+            <input type="text" class="form-control" id="Epost" asp-for="Epost" required />
+            <span asp-validation-for="Epost" class="text-danger"></span>
+        <p></p>
+    </div>
+<br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<br>
+<p>@Model.Förnamn är född @Model.Personnummer</p>
+
+<!-- asp-validation -->
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
