@@ -18,27 +18,51 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  margin: 0; /* Elimina el margen por defecto del body */
+  padding: 0; /* Elimina el padding por defecto del body */
+  background-image: url('/images/bank.jpg');
+  background-size: cover; /* Asegura que la imagen cubra toda el área de fondo */
+  background-position: center; /* Centra la imagen en la pantalla */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  display: flex; /* Usa flexbox para el diseño del body */
+  flex-direction: column; /* Coloca los elementos en una columna */
+  min-height: 100vh; /* Asegura que el body tenga al menos la altura de la vista */
 }
 
+.container {
+  flex: 1; /* Permite que el contenedor crezca para ocupar el espacio disponible */
+  display: flex;
+  flex-direction: column;
+}
+header {
+  background-image: url('/images/bank.jpg'); /* Aplica la imagen de fondo al header */
+  background-size: cover; /* Asegura que la imagen cubra toda el área del header */
+  background-position: center; /* Centra la imagen en el header */
+  background-repeat: no-repeat; /* Evita la repetición de la imagen */
+  border-bottom: none; /* Elimina el borde en la parte inferior del header */
+  padding: 10px 0; /* Agrega un poco de espacio interno si es necesario */
+  
+}
 .custom-navbar {
   display: flex;
-  justify-content: space-between;     /* Makes space between elements */
-  align-items: center;                /* Aligns items vertically */
+  justify-content: space-between; /* Hace espacio entre los elementos */
+  align-items: center; /* Alinea los elementos verticalmente */
 }
 
 .center-text {
   text-align: center;
-  font-size: 2rem;                    /* Adjust the size as needed */
-  flex-grow: 1;                       /* Allows it to take up available space to center it */
+  font-size: 2rem; /* Ajusta el tamaño según sea necesario */
+  flex-grow: 1; /* Permite que ocupe el espacio disponible para centrarlo */
 }
 
 .center-text span {
-  pointer-events: auto;               /* Allow clicks on the text */
+  pointer-events: auto; /* Permite clics en el texto */
 }
 
 .navbar-collapse {
-  display: flex;                      /* Makes a flex container */
-  justify-content: flex-end;          /* Aligns items to the right */
-  width: 100%;                        /* Ensures full width for the collapse area */
+  display: flex; /* Hace un contenedor flex */
+  justify-content: flex-end; /* Alinea los elementos a la derecha */
+  width: 100%; /* Asegura que tenga el ancho completo */
 }
+
+
