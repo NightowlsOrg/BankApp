@@ -1,79 +1,90 @@
-html {
-  font-size: 14px;
+/* Asegura que html y body cubran toda la altura del viewport sin márgenes ni paddings */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* Estilos para el body para manejar el fondo */
 body {
-  margin: 0; /* Elimina el margen por defecto del body */
-  padding: 0; /* Elimina el padding por defecto del body */
   background-image: url('/images/bank.jpg');
-  background-size: cover; /* Asegura que la imagen cubra toda el área de fondo */
-  background-position: center; /* Centra la imagen en la pantalla */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
-  display: flex; /* Usa flexbox para el diseño del body */
-  flex-direction: column; /* Coloca los elementos en una columna */
-  min-height: 100vh; /* Asegura que el body tenga al menos la altura de la vista */
-}
-
-.container {
-  flex: 1; /* Permite que el contenedor crezca para ocupar el espacio disponible */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
+  min-height: 100vh; /* Asegura que el body tenga al menos la altura del viewport */
 }
 
+/* Estilos para el header */
 header {
-  background-image: url('/images/bank.jpg'); /* Aplica la imagen de fondo al header */
-  background-size: cover; /* Asegura que la imagen cubra toda el área del header */
-  background-position: center; /* Centra la imagen en el header */
-  background-repeat: no-repeat; /* Evita la repetición de la imagen */
-  border-bottom: none; /* Elimina el borde en la parte inferior del header */
-  padding: 10px 0; /* Agrega un poco de espacio interno si es necesario */
+  background: transparent; /* Elimina el fondo blanco y lo hace transparente */
+  border-bottom: none; /* Elimina el borde inferior */
+  padding: 0; /* Elimina padding */
+  margin: 0; /* Elimina margen */
+  width: 100%; /* Asegura que el header ocupe todo el ancho */
 }
 
-.custom-navbar {
+/* Estilos para el contenedor principal */
+.container {
+  flex: 1; /* Permite que el contenedor crezca para llenar el espacio disponible */
   display: flex;
-  justify-content: space-between; /* Hace espacio entre los elementos */
-  align-items: center; /* Alinea los elementos verticalmente */
+  flex-direction: column;
+  margin: 0 !important; /* Elimina margen extra */
+  padding: 0 !important; /* Elimina padding extra */
 }
 
-.center-text {
-  text-align: center;
-  font-size: 2rem; /* Ajusta el tamaño según sea necesario */
-  flex-grow: 1; /* Permite que ocupe el espacio disponible para centrarlo */
+/* Estilos para el footer */
+footer {
+  background: white !important; /* Fondo blanco sólido */
+  border-top: 1px solid #e5e5e5 !important; /* Borde superior para el footer */
+  padding: 2px 5px !important; /* Reduce el padding aún más para hacer el footer más pequeño */
+  margin-top: 20px !important; /* Añade margen superior para separación */
+  width: 100% !important; /* Asegura que el footer ocupe todo el ancho */
+  position: relative; /* Mantiene el footer en la posición deseada */
+  bottom: 0; /* Alinea el footer al fondo */
 }
 
-.center-text span {
-  pointer-events: auto; /* Permite clics en el texto */
+/* Estilos para la navbar */
+.navbar {
+  border-top: none !important; /* Asegura que no haya borde superior */
+  border-bottom: none !important; /* Asegura que no haya borde inferior */
+  padding-bottom: 0 !important; /* Elimina el padding inferior */
+  margin-bottom: 0 !important; /* Elimina el margen inferior */
+  background: transparent !important; /* Elimina el fondo blanco con !important para asegurar la sobreescritura */
+  box-shadow: none !important; /* Elimina cualquier sombra si no la quieres */
+  line-height: 1.2 !important; /* Reemplaza el valor previo */
 }
 
+/* Asegura que line-height esté ajustado correctamente en los formularios */
+.form-control {
+  line-height: 1 !important; /* Sobrescribe cualquier valor previo */
+}
+/* Estilos para el contenedor dentro de la navbar */
+.navbar .container-fluid {
+  padding-bottom: 0 !important; /* Elimina el padding inferior en el contenedor */
+  margin-bottom: 0 !important; /* Elimina el margen inferior en el contenedor */
+}
+
+/* Añade margen derecho al botón para evitar que quede pegado al borde */
+.navbar-nav .nav-item .btn {
+  margin-right: 15px; /* Ajusta este valor según lo que necesites */
+  padding: 10px 20px; /* Aumenta el padding para agrandar el botón */
+  font-size: 1.25rem; /* Aumenta el tamaño de la fuente */
+  border-radius: 8px; /* Ajusta la redondez del botón */
+  line-height: normal; /* Asegura que el line-height del botón sea normal */
+}
+
+/* Asegura que los elementos flexibles estén correctamente alineados en la navbar */
 .navbar-collapse {
-  display: flex; /* Hace un contenedor flex */
-  justify-content: flex-end; /* Alinea los elementos a la derecha */
-  width: 100%; /* Asegura que tenga el ancho completo */
+  display: flex;
+  justify-content: flex-end;
+  width: 100% !important;
 }
 
-.navbar-brand {
-  position: absolute;
-  left: 50%; /* Centra la marca horizontalmente */
-  top: 50%; /* Centra la marca verticalmente */
-  transform: translate(-50%, -50%); /* Centra la marca basado en sus dimensiones */
-  margin: 0; /* Resetea cualquier margen por defecto */
-  padding: 0; /* Resetea cualquier padding por defecto */
-  line-height: normal; /* Asegura que la altura de línea sea normal */
-  vertical-align: middle; /* Alinea verticalmente si es necesario para elementos en línea */
+/* Evita márgenes o paddings adicionales en el contenedor */
+.container-fluid {
+  padding: 0 !important; /* Elimina padding adicional */
+  margin: 0 !important; /* Elimina margen adicional */
 }
-

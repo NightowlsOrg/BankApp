@@ -40,20 +40,57 @@
 }
 
 <style>
-    .login-form {
-        max-width: 400px;       /* Set a max width for the form */
-        margin: auto;           /* Center the form on the page */
-        position: relative;     /* Ensure positioning works with inner elements */
-        top: 50px;              /* Adjust this value as needed to move form down */
-        left: 0px;              /* Adjust this value to move form left */
+    body {
+        display: flex;
+        justify-content: center; /* Centra horizontalmente */
+        align-items: center;     /* Centra verticalmente */
+        height: 100vh;           /* Full viewport height */
+        margin: 0;               /* Elimina márgenes predeterminados */
+        background-color: #f8f9fa; /* Fondo gris claro opcional */
     }
+
+    .login-container {
+        max-width: 100px;       /* Establece el ancho máximo del contenedor */
+        width: 100%;            /* Permite que el contenedor se ajuste al ancho del viewport */
+        padding: 10%px;         /* Añade relleno interno */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Añade sombra para darle profundidad */
+        background-color: #fff; /* Fondo blanco para el formulario */
+        border-radius: 4px;     /* Bordes redondeados opcionales */
+        box-sizing: border-box; /* Incluye el relleno y el borde en el ancho total */
+        margin: auto;           /* Centra el contenedor dentro del body */
+    }
+
+    .form-label {
+        font-size: 14px;        /* Tamaño de fuente para etiquetas */
+        margin-bottom: 5px;     /* Espacio debajo de las etiquetas */
+        display: block;         /* Asegura que las etiquetas ocupen toda la línea */
+    }
+
     .form-group {
-        margin-bottom: 15px;    /* Space between form groups */
-        margin-left: 10px;      /* Adjust this for leftward position */
+        margin-bottom: 8px;    /* Espacio entre los grupos de formulario */
     }
+
     .form-control {
-        width: 100%;            /* Make input fields full width */
-        padding: 10px;          /* Add padding for better touch targets */
-        font-size: 16px;        /* Increase font size */
+        width: 100%;            /* Campo de entrada de ancho completo */
+        padding: 4px;           /* Ajusta el relleno interno */
+        font-size: 12px;        /* Tamaño de fuente para campos de entrada */
+        border: 1px solid #ddd; /* Borde del campo de entrada */
+        border-radius: 4px;     /* Bordes redondeados opcionales */
+        box-sizing: border-box; /* Incluye el borde en el ancho total */
     }
+
+    .btn-primary {
+        display: block;         /* Botones de ancho completo */
+        width: 100%;            /* Ancho completo */
+        padding: 6px;          /* Relleno interno reducido */
+        font-size: 12px;        /* Tamaño de fuente para botones reducido */
+        border: none;           /* Elimina borde predeterminado */
+        border-radius: 4px;     /* Bordes redondeados opcionales */
+        cursor: pointer;        /* Cambia el cursor cuando se pasa sobre el botón */
+        background-color: #007bff; /* Color de fondo por defecto */
+        color: #fff;            /* Color del texto del botón */
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3; /* Color de fondo al pasar el ratón */
 </style>

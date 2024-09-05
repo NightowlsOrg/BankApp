@@ -29,3 +29,4 @@ C:\Users\BenjiSalas\Development\BankApp\obj\Debug\net8.0\refint\BankApp.dll
 C:\Users\BenjiSalas\Development\BankApp\obj\Debug\net8.0\BankApp.pdb
 C:\Users\BenjiSalas\Development\BankApp\obj\Debug\net8.0\BankApp.genruntimeconfig.cache
 C:\Users\BenjiSalas\Development\BankApp\obj\Debug\net8.0\ref\BankApp.dll
+C:\Users\BenjiSalas\Development\BankApp\bin\Debug\net8.0\kunder.json

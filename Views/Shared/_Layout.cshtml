@@ -9,46 +9,52 @@
     <link rel="stylesheet" href="~/BankApp.styles.css" asp-append-version="true" />
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3 custom-navbar">
-        <div class="container-fluid">
-            <div class="d-flex justify-content-center w-100">
-                <a class="navbar-brand" asp-area="" asp-controller="BankApp" asp-action="Index"><span style="font-size: 2rem;">BankApp</span></a>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light border-bottom box-shadow mb-3 custom-navbar">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-center w-100">
+                    <a class="navbar-brand" asp-area="" asp-controller="BankApp" asp-action="Index">
+                        <span style="font-size: 2rem;">Bank Finance AB</span>
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto"> 
+                        @if (Context?.User?.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="minasidor" asp-action="kundinfo">Mina sidor</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="minasidor" asp-action="authinfo">Auth info</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-danger" asp-area="" asp-controller="minasidor" asp-action="logout">Logga ut</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-primary" asp-area="" asp-controller="minasidor" asp-action="login">Logga in</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
             </div>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ml-auto"> 
-                    @if (Context?.User?.Identity?.IsAuthenticated == true)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="minasidor" asp-action="kundinfo">Mina sidor</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="minasidor" asp-action="authinfo">Auth info</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-danger" asp-area="" asp-controller="minasidor" asp-action="logout">Logga ut</a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="btn btn-primary" asp-area="" asp-controller="minasidor" asp-action="login">Logga in</a>
-                        </li>
-                    }
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
+        </nav>
+    </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - BankApp - <a asp-area="" asp-controller="bankapp" asp-action="privacy">Privacy</a>
+            <div class="footer-content">
+                &copy; 2024 - BankApp - 
+                <a asp-area="" asp-controller="bankapp" asp-action="privacy">Privacy</a> |
+                <a asp-area="" asp-controller="bankapp" asp-action="terms">Terms</a> |
+                <a asp-area="" asp-controller="bankapp" asp-action="cookies">Cookies</a>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
