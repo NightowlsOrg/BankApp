@@ -42,8 +42,9 @@ footer {
   padding: 2px 5px !important; /* Reduce el padding aún más para hacer el footer más pequeño */
   margin-top: 20px !important; /* Añade margen superior para separación */
   width: 100% !important; /* Asegura que el footer ocupe todo el ancho */
-  position: relative; /* Mantiene el footer en la posición deseada */
+  position: fixed; /* Mantiene el footer en la posición deseada */
   bottom: 0; /* Alinea el footer al fondo */
+  z-index: 100;
 }
 
 /* Estilos para la navbar */

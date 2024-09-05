@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Logga in";
-
 }
 
 <br>
@@ -30,9 +29,8 @@
     </div>
 
     <div class="form-group">
-    <a asp-action="Register" asp-controller="BankApp" class="btn btn-primary">Registrera dig</a>
+        <a asp-action="Register" asp-controller="BankApp" class="btn btn-primary">Registrera dig</a>
     </div>
-
 </form>
 
 @section Scripts {
@@ -44,53 +42,58 @@
         display: flex;
         justify-content: center; /* Centra horizontalmente */
         align-items: center;     /* Centra verticalmente */
-        height: 100vh;           /* Full viewport height */
-        margin: 0;               /* Elimina márgenes predeterminados */
-        background-color: #f8f9fa; /* Fondo gris claro opcional */
+        min-height: 100vh;
+        margin: 0;
+        background-color: #f8f9fa;
     }
 
-    .login-container {
-        max-width: 100px;       /* Establece el ancho máximo del contenedor */
-        width: 100%;            /* Permite que el contenedor se ajuste al ancho del viewport */
-        padding: 10%px;         /* Añade relleno interno */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Añade sombra para darle profundidad */
-        background-color: #fff; /* Fondo blanco para el formulario */
-        border-radius: 4px;     /* Bordes redondeados opcionales */
-        box-sizing: border-box; /* Incluye el relleno y el borde en el ancho total */
-        margin: auto;           /* Centra el contenedor dentro del body */
-    }
-
-    .form-label {
-        font-size: 14px;        /* Tamaño de fuente para etiquetas */
-        margin-bottom: 5px;     /* Espacio debajo de las etiquetas */
-        display: block;         /* Asegura que las etiquetas ocupen toda la línea */
+    .login-form {
+        max-width: 400px;
+        width: 100%;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        box-sizing: border-box;
+        margin: auto; 
     }
 
     .form-group {
-        margin-bottom: 8px;    /* Espacio entre los grupos de formulario */
+        margin-bottom: 15px;
     }
 
     .form-control {
-        width: 100%;            /* Campo de entrada de ancho completo */
-        padding: 4px;           /* Ajusta el relleno interno */
-        font-size: 12px;        /* Tamaño de fuente para campos de entrada */
-        border: 1px solid #ddd; /* Borde del campo de entrada */
-        border-radius: 4px;     /* Bordes redondeados opcionales */
-        box-sizing: border-box; /* Incluye el borde en el ancho total */
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
     }
 
     .btn-primary {
-        display: block;         /* Botones de ancho completo */
-        width: 100%;            /* Ancho completo */
-        padding: 6px;          /* Relleno interno reducido */
-        font-size: 12px;        /* Tamaño de fuente para botones reducido */
-        border: none;           /* Elimina borde predeterminado */
-        border-radius: 4px;     /* Bordes redondeados opcionales */
-        cursor: pointer;        /* Cambia el cursor cuando se pasa sobre el botón */
-        background-color: #007bff; /* Color de fondo por defecto */
-        color: #fff;            /* Color del texto del botón */
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        background-color: #007bff;
+        border: none;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
     }
 
     .btn-primary:hover {
-        background-color: #0056b3; /* Color de fondo al pasar el ratón */
+        background-color: #0056b3;
+    }
+
+    footer {
+        background-color: #f8f9fa;
+        border-top: 1px solid #e5e5e5;
+        padding: 10px;
+        text-align: center;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+    }
 </style>
