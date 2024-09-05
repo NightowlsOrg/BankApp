@@ -8,6 +8,9 @@ public class KundEntityJson
     [JsonPropertyName("id")]
     public int Id { get; set; }
 
+    [JsonPropertyName("lösenord")]
+    public string? Lösenord { get; set; }
+
     [JsonPropertyName("personnummer")]
     public string? Personnummer { get; set; }
 

@@ -1,7 +1,6 @@
-namespace BankApp.Application;
+namespace BankApp.Models;
 
-// Flyttar data från Application till Presentation (Data Transfer Object)
-public class KundDTO
+public class KundViewModel
 {
     public Guid Id { get; set; }
     public string Lösenord { get; set; } = string.Empty;

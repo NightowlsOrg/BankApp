@@ -1,4 +1,5 @@
 using BankApp.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankApp.Infrastructure;
 
@@ -8,9 +9,29 @@ namespace BankApp.Infrastructure;
 // Här ska databasen anslutas
 public class KundRepository : IKundRepository
 {
-    public Kund GetKundById(int id)
+
+    private readonly AppDbContext _context;
+
+    public KundRepository(AppDbContext context)
+    {
+        _context = context;
+    }
+
+    public Kund GetKundById(Guid id)
     {
         // Finns ingen databas konfigurerad så mockas ett kundobjekt (om programmet startats med att läsa från en databas i Program.cs)
-        return new Kund("1661-05-01", "Infrastructure", "Repository", "Gatan 1", "123 45", "Staden", "070-123 45 67", "epost@domain.se");   // Mock implementation
+        return new Kund(id, "lösenord", "1661-05-01", "Infrastructure", "Repository", "Gatan 1", "123 45", "Staden", "070-123 45 67", "epost@domain.se");   // Mock implementation
+    }
+
+    public async Task<Kund?> GetByIdAsync(Guid id)
+    {
+        var dataModel = await _context.Kunder.FindAsync(id);
+        return dataModel == null ? null : new Kund(dataModel.Id, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
+    }
+
+    public async Task<Kund?> ValidateKundAsync(Kund kund)
+    {
+        var dataModel = await _context.Kunder.FirstOrDefaultAsync(k => k.Förnamn == kund.Förnamn && k.Lösenord == kund.Lösenord);
+        return dataModel == null ? null : new Kund(dataModel.Id, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
     }
 }
