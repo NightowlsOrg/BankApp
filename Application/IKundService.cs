@@ -1,10 +1,14 @@
-namespace BankApp.Application;
+namespace BankApp.Application
+{
+    using System;
+    using System.Threading.Tasks;
+    using BankApp.Models;
 
-// Skapar Interface-klassen IKundService
 public interface IKundService
 {
-    Task<KundDTO?> GetKundByIdAsync(Guid id);
-    
-    // ValidateKundAsync används för att validera om kunden finns i databasen
+    Task<KundDTO?> GetByIdAsync(Guid id);
+    Task<KundDTO?> GetAllAsync();
+    Task<KundDTO> AddKundAsync(KundDTO kund);
     Task<KundDTO?> ValidateKundAsync(string förnamn, string lösenord);
+}
 }
