@@ -14,34 +14,17 @@ public class KundService : IKundService
         _kundRepository = kundRepository;
     }
  
-    public KundDTO GetKund()
+   public async Task<KundDTO?> GetKundByIdAsync(Guid id)
     {
-        // Application är andra stället att mocka kundobjektet
-        // Returnerar ett mockat KundDTO-objekt
-        // return new KundDTO
-        // {
-        //     Personnummer = "1968-08-06",
-        //     Förnamn = "Application",
-        //     Efternamn = "KundService",
-        //     Adress = "Gatan 1",
-        //     Postnummer = "123 45",
-        //     Postort = "Staden",
-        //     Tele = "070-123 45 67",
-        //     Epost = "epost@domain.se"
-        // };
+        var kund = await _kundRepository.GetByIdAsync(id);
+        return kund == null ? null : new KundDTO { Id = kund.Id, Lösenord = kund.Lösenord, Personnummer = kund.Personnummer, Förnamn = kund.Förnamn, Efternamn = kund.Efternamn, Adress = kund.Adress, Postnummer = kund.Postnummer, Postort = kund.Postort, Tele = kund.Tele, Epost = kund.Epost };
+    }
 
-        // Hämta ett kund från Infrastructure repository
-        var kund = _kundRepository.GetKundById(1);
-        return new KundDTO
-        {
-            Personnummer = kund.Personnummer,
-            Förnamn = kund.Förnamn,
-            Efternamn = kund.Efternamn,
-            Adress = kund.Adress,
-            Postnummer = kund.Postnummer,
-            Postort = kund.Postort,
-            Tele = kund.Tele,
-            Epost = kund.Epost
-        };
+    // ValidateKundAsync används för att validera om kunden finns i databasen
+    public async Task<KundDTO?> ValidateKundAsync(string förnamn, string lösenord)
+    {
+        var kund = new Kund(Guid.Empty, lösenord, "", förnamn, "", "", "", "", "", "");
+        var validatedKund = await _kundRepository.ValidateKundAsync(kund);
+        return validatedKund == null ? null : new KundDTO { Id = validatedKund.Id, Lösenord = validatedKund.Lösenord, Personnummer = validatedKund.Personnummer, Förnamn = validatedKund.Förnamn, Efternamn = validatedKund.Efternamn, Adress = validatedKund.Adress, Postnummer = validatedKund.Postnummer, Postort = validatedKund.Postort, Tele = validatedKund.Tele, Epost = validatedKund.Epost };
     }
 }

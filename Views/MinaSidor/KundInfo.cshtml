@@ -1,4 +1,4 @@
-@model BankApp.Models.Kund
+@model BankApp.Models.KundViewModel
 
 <br>
 <center>
@@ -6,16 +6,26 @@
 </center>
 <br>
 <form asp-controller="minasidor" asp-action="kundinfo" method="post">
+<br>
     <div class="form-group">
-        <label for="Personnummer">Personnummer:</label>
-        <input type="text" class="form-control" id="Personnummer" asp-for="Personnummer" required />
-        <span asp-validation-for="Personnummer" class="text-danger"></span>
+            <label for="Lösenord">Lösenord:</label>
+            <input type="text" class="form-control" id="Lösenord" asp-for="Lösenord" required />
+            <span asp-validation-for="Lösenord" class="text-danger"></span>
+        <p></p>
+    </div>
+<br>
+    <div class="form-group">
+            <label for="Personnummer">Personnummer:</label>
+            <input type="text" class="form-control" id="Personnummer" asp-for="Personnummer" required />
+            <span asp-validation-for="Personnummer" class="text-danger"></span>
+        <p></p>
     </div>
 <br>
     <div class="form-group">
             <label for="Förnamn">Förnamn:</label>
             <input type="text" class="form-control" id="Förnamn" asp-for="Förnamn" required />
             <span asp-validation-for="Förnamn" class="text-danger"></span>
+        <p></p>
     </div>
 <br>
     <div class="form-group">
@@ -63,7 +73,7 @@
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 <br>
-<p>@Model.Förnamn är född @Model.Personnummer</p>
+<p>@Model.Förnamn har lösenordet "@Model.Lösenord"</p>
 
 <!-- asp-validation -->
 @section Scripts {

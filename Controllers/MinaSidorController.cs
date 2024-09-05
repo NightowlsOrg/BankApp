@@ -39,18 +39,40 @@ public class MinaSidorController : Controller
             return View(model);
         }
 
-        // Mocked user verification
-        if (model.Användarnamn == MockedUsername && model.Lösenord == MockedPassword)
+        // Validera om kund finns i databasen.
+        var kund = await _kundService.ValidateKundAsync(model.Förnamn, model.Lösenord);
+        if (kund != null)
         {
-
-            // Set up the session/cookie for the authenticated user.
-            var claims = new[] { new Claim(ClaimTypes.Name, model.Användarnamn) };
+            // Finns kund i databasen, claimas identitet och en kaka sätts för att hålla sessionen aktiv.
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.Name, model.Förnamn),
+                new Claim("KundId", kund.Id.ToString())
+            };
+            
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var principal = new ClaimsPrincipal(identity);
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+            return RedirectToAction("start", "minasidor");
+        }
+
+        // Mocked user verification
+        if (model.Förnamn == MockedUsername && model.Lösenord == MockedPassword)
+        {
+
+            // Set up the session/cookie for the authenticated user.
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.Name, model.Förnamn),
+                new Claim("KundId", "12345678-1234-1234-1234-123456789ABC".ToString())
+            };
+
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
 
             // Normally, here you'd set up the session/cookie for the authenticated user.
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
             return RedirectToAction("start", "minasidor"); // Redirect to a secure area of your application.
         }
 
@@ -69,7 +91,7 @@ public class MinaSidorController : Controller
         return SignOut(
             new AuthenticationProperties
             {
-                RedirectUri = Url.Action("Index", "BankApp")
+                RedirectUri = Url.Action("index", "bankapp")
             },
             CookieAuthenticationDefaults.AuthenticationScheme);
     }
@@ -79,26 +101,27 @@ public class MinaSidorController : Controller
         return View();
     }
 
-   // Change the KundInfo method to use the service and the DTO to retreive kund info
-    public IActionResult KundInfo()
+    [Authorize]
+    public async Task<IActionResult> KundInfo()
     {
-        // Controller är första stället att mocka kundobjektet medans man jobbar sig ner mot databasen
-        // var kund = new Kund
-        // {
-        //     Personnummer = "1968-08-06",
-        //     Förnamn = "Controller",
-        //     Efternamn = "MinaSidor",
-        //     Adress = "Gatan 1",
-        //     Postnummer = "123 45",
-        //     Postort = "Staden",
-        //     Tele = "070-123 45 67",
-        //     Epost = "epost@domain.se"
-        // };
-
-        // Hämta kund från Application service 
-        var kundDTO = _kundService.GetKund();
-        var kund = new Kund
+        // Hämta kundId/GUID från claim
+        var kundIdClaim = User.Claims.FirstOrDefault(c => c.Type == "KundId")?.Value;
+        if (string.IsNullOrEmpty(kundIdClaim) || !Guid.TryParse(kundIdClaim, out Guid kundId))
         {
+            return RedirectToAction("login", "minasidor");
+        }
+
+        // Hämta kund från databasen med hjälp av GUID
+        var kundDTO = await _kundService.GetKundByIdAsync(kundId);
+        if (kundDTO == null)
+        {
+            return RedirectToAction("login", "minasidor");
+        }
+
+        var kundViewModel = new KundViewModel
+        {
+            Id = kundDTO.Id,
+            Lösenord = kundDTO.Lösenord,         // Obs! Generellt sätt så är det ingen bra idé att visa lösenordet här :)
             Personnummer = kundDTO.Personnummer,
             Förnamn = kundDTO.Förnamn,
             Efternamn = kundDTO.Efternamn,
@@ -109,11 +132,11 @@ public class MinaSidorController : Controller
             Epost = kundDTO.Epost
         };
 
-        return View(kund);
+        return View(kundViewModel);
     }
 
     [HttpPost]
-    public IActionResult KundInfo(Kund model)
+    public IActionResult KundInfo(KundViewModel model)
     {
         if (ModelState.IsValid)
         {
@@ -125,5 +148,4 @@ public class MinaSidorController : Controller
         // If the model is not valid, return the same view to display errors
         return View(model);
     }
-
 }

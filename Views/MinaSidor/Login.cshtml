@@ -7,16 +7,16 @@
 
 <br>
 <center>
-    <h4>Logga in på Mina sidor</h4>
+    <h4>Inloggning</h4>
 </center>
 
 <form asp-action="login" asp-controller="minasidor" method="post" asp-antiforgery="true" class="login-form">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="form-group">
-        <label asp-for="Användarnamn" style="font-size: 18px;">Användarnamn:</label>
-        <input type="text" id="Användarnamn" asp-for="Användarnamn" class="form-control" required />
-        <span asp-validation-for="Användarnamn" class="text-danger"></span>
+        <label asp-for="Förnamn" style="font-size: 18px;">Förnamn:</label>
+        <input type="text" id="Förnamn" asp-for="Förnamn" class="form-control" required />
+        <span asp-validation-for="Förnamn" class="text-danger"></span>
     </div>
 
     <div class="form-group">

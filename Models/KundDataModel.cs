@@ -2,13 +2,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BankApp.Models;
 
-public class Kund
+public class KundDataModel
 {
+    public Guid Id { get; set; }
+
+    [Required]
+    public string? Lösenord { get; set; }
+
     [Required]
     public string? Personnummer { get; set; }
-    
+
     [Required]
-    [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Använd endast bokstäver, inga siffror eller specialtecken.")]
+    [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Använd endast bokstäver")]
     public string? Förnamn { get; set; }
 
     [Required]
