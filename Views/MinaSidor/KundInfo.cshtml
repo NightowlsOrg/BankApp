@@ -6,14 +6,6 @@
 </center>
 <br>
 <form asp-controller="minasidor" asp-action="kundinfo" method="post">
-<br>
-    <div class="form-group">
-            <label for="Lösenord">Lösenord:</label>
-            <input type="text" class="form-control" id="Lösenord" asp-for="Lösenord" required />
-            <span asp-validation-for="Lösenord" class="text-danger"></span>
-        <p></p>
-    </div>
-<br>
     <div class="form-group">
             <label for="Personnummer">Personnummer:</label>
             <input type="text" class="form-control" id="Personnummer" asp-for="Personnummer" required />
@@ -32,6 +24,13 @@
             <label for="Efternamn">Efternamn:</label>
             <input type="text" class="form-control" id="Efternamn" asp-for="Efternamn" required />
             <span asp-validation-for="Efternamn" class="text-danger"></span>
+        <p></p>
+    </div>
+<br>
+    <div class="form-group">
+            <label for="Lösenord">Lösenord:</label>
+            <input type="text" class="form-control" id="Lösenord" asp-for="Lösenord" required />
+            <span asp-validation-for="Lösenord" class="text-danger"></span>
         <p></p>
     </div>
 <br>
