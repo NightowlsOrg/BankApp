@@ -21,12 +21,3 @@ public interface IKundRepository
 
 
 
-
-
-
-
-
-
-
-
-
