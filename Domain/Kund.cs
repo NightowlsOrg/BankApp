@@ -29,3 +29,4 @@ public class Kund
         Epost = epost;
     }
 }	
+

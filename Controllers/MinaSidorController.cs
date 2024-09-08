@@ -149,3 +149,23 @@ public class MinaSidorController : Controller
         return View(model);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

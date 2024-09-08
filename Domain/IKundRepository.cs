@@ -15,4 +15,18 @@ public interface IKundRepository
     // Task DeleteAsync(Guid id);
 
     Task<Kund?> ValidateKundAsync(Kund kund);
+
+    Task<Kund?> AddAsync(Kund kund);
 }
+
+
+
+
+
+
+
+
+
+
+
+
