@@ -40,40 +40,5 @@ namespace BankApp.Controllers
     {
         return View();
     }
-
-[HttpPost]
-
-public async Task<IActionResult> Register(KundViewModel model)
-{
-    if (!ModelState.IsValid)
-    {
-        return View(model);
-    }
-
-    // Create a new KundDTO object from the view model
-    var kundDTO = new KundDTO
-    {
-        Id = model.Id,
-        Lösenord = model.Lösenord,
-        Personnummer = model.Personnummer,
-        Förnamn = model.Förnamn,
-        Efternamn = model.Efternamn,
-        Adress = model.Adress,
-        Postnummer = model.Postnummer,
-        Postort = model.Postort,
-        Tele = model.Tele,
-        Epost = model.Epost
-    };
-
-    var kund = await _kundService.AddKundAsync(kundDTO);
-
-    if (kund == null)
-    {
-        ModelState.AddModelError(string.Empty, "Kunden kunde inte skapas.");
-        return View(model);
-    }
-
-    return RedirectToAction("Index");
-}
-}
+    
 }

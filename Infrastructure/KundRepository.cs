@@ -1,5 +1,4 @@
 using BankApp.Domain;
-using BankApp.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankApp.Infrastructure;
@@ -34,24 +33,5 @@ public class KundRepository : IKundRepository
     {
         var dataModel = await _context.Kunder.FirstOrDefaultAsync(k => k.Förnamn == kund.Förnamn && k.Lösenord == kund.Lösenord);
         return dataModel == null ? null : new Kund(dataModel.Id, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
-    }
-
-    public async Task AddKundAsync(Kund kund)
-    {
-        var dataModel = new KundDataModel
-        {
-            Id = kund.Id,
-            Lösenord = kund.Lösenord,
-            Personnummer = kund.Personnummer,
-            Förnamn = kund.Förnamn,
-            Efternamn = kund.Efternamn,
-            Adress = kund.Adress,
-            Postnummer = kund.Postnummer,
-            Postort = kund.Postort,
-            Tele = kund.Tele,
-            Epost = kund.Epost
-        };
-        await _context.Kunder.AddAsync(dataModel);
-        await _context.SaveChangesAsync();
     }
 }
