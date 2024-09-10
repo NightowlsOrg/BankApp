@@ -1,16 +1,16 @@
-@model BankApp.Models.KundViewModel
+@model BankApp.Models.KundDataModel
 
 @{
-    ViewData["Title"] = "Kundinfo";
+    ViewData["Title"] = "Ny kund";
 }
 
 <br>
 <center>
-    <h2>Kundinformation</h2>
+    <h2>Registrering</h2>
 </center>
 <br>
 
-<form asp-controller="minasidor" asp-action="kundinfo" method="post">
+<form asp-controller="bankapp" asp-action="nykund" method="post">
 <br>
     <div class="form-group">
             <label for="Personnummer">Personnummer:</label>
@@ -65,10 +65,10 @@
             <input type="text" class="form-control" id="Lösenord" asp-for="Lösenord" required />
             <span asp-validation-for="Lösenord" class="text-danger"></span>
     </div>
+<br>
+<br>
+    <button type="submit" class="btn btn-primary">Skicka</button>
 </form>
-<br>
-<br>
-<p>@Model.Förnamn har lösenordet "@Model.Lösenord"</p>
 
 <!-- asp-validation -->
 @section Scripts {

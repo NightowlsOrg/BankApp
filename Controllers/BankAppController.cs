@@ -32,23 +32,18 @@ public class BankAppController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
-    public IActionResult Register()
-    {
-        return View();
-    }
-
     [HttpPost]
-    public async Task<IActionResult> Register(KundViewModel model)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Nykund(KundDataModel model)
     {
         if (!ModelState.IsValid)
         {
-            return View(model);
+            return View(model); // Return the same view with validation errors.
         }
 
-        // Create a new KundDTO object from the view model
-        var kundDTO = new KundDTO
+        var nyKund = new KundDTO
         {
-            Id = model.Id,
+            Id = Guid.NewGuid(),
             Lösenord = model.Lösenord,
             Personnummer = model.Personnummer,
             Förnamn = model.Förnamn,
@@ -60,14 +55,14 @@ public class BankAppController : Controller
             Epost = model.Epost
         };
 
-    var kund = await _kundService.AddKundAsync(kundDTO);
-    if (kund == null)
-    {
-        ModelState.AddModelError(string.Empty, "Kunden kunde inte skapas.");
-        return View(model);
+        await _kundService.AddKundAsync(nyKund);
+        TempData["SuccessMessage"] = $"{model.Förnamn} {model.Efternamn} har registrerats.";
+        return RedirectToAction("index", "bankapp");
     }
 
-    return RedirectToAction("Index");
+    public IActionResult Nykund()
+    {
+        return View(new KundDataModel()); // Passing a new instance for the view to bind to.
     }
 
 }
