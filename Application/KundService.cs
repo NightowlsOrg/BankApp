@@ -47,6 +47,13 @@ public class KundService : IKundService
         await _kundRepository.AddAsync(kund);
     }
 
+    // Lista alla kunder
+        public async Task<IEnumerable<KundDTO?>> GetAllAsync()
+    {
+        var kunder = await _kundRepository.GetAllAsync();
+        return kunder.Select(MapToKundDTO); // Map returned entities to DTOs
+    }
+
     // Mappa Kund-objekt till KundDTO-objekt (Data Transfer Object) för att skicka data mellan lager
     private KundDTO MapToKundDTO(Kund kund)
     {

@@ -11,4 +11,7 @@ public interface IKundService
 
     // Lägg till en kund i databasen
     Task AddKundAsync(KundDTO kund);
+
+    // Lista alla kunder
+    Task<IEnumerable<KundDTO?>> GetAllAsync();
 }
