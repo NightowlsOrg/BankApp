@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240910132655_InitialCreate")]
+    [Migration("20240910134934_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -69,7 +69,7 @@ namespace BankApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("21023140-d45a-40fe-801f-9d4406736117"),
+                            Id = new Guid("4131a59f-7dbc-42ce-bef9-01bcdd295f9f"),
                             Adress = "Knasgatan 1",
                             Efternamn = "Knasare",
                             Epost = "knaspelle.knasare@knas.se",
@@ -82,7 +82,7 @@ namespace BankApp.Migrations
                         },
                         new
                         {
-                            Id = new Guid("96b78089-5b94-417a-a72a-c6cbe99efb45"),
+                            Id = new Guid("529b007e-ba19-408a-936c-bae7f44c5ed3"),
                             Adress = "Ankgatan 1",
                             Efternamn = "Ankare",
                             Epost = "ankpelle.ankare@ank.se",
@@ -95,7 +95,7 @@ namespace BankApp.Migrations
                         },
                         new
                         {
-                            Id = new Guid("41e45249-eaaa-4f0c-809a-241fde63d5bb"),
+                            Id = new Guid("ecc81574-0840-416f-a8c5-848a56da679e"),
                             Adress = "Testgatan 1",
                             Efternamn = "Testare",
                             Epost = "test.testare@testby.se",

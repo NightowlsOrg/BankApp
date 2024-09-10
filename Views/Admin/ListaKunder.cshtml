@@ -1,0 +1,46 @@
+@model IEnumerable<BankApp.Application.KundDTO>
+
+<br>
+<center>
+    <h2>Kunder</h2>
+</center>
+<br>
+<br>
+<center>
+<table class="table" style="width: 125%; margin-left: -150px;">
+    <thead>
+        <tr>
+            <th>GUID</th>
+            <th>Lösenord</th>
+            <th>Förnamn</th>
+            <th>Efternamn</th>
+            <th>Personnummer</th>
+            <th>Adress</th>
+            <th>Postnummer</th>
+            <th>Postort</th>
+            <th>Tele</th>
+            <th>Epost</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var kund in Model)
+        {
+            <tr>
+                <td>@kund.Id</td>
+                <td>@kund.Lösenord</td>
+                <td>@kund.Förnamn</td>
+                <td>@kund.Efternamn</td>
+                <td>@kund.Personnummer</td>
+                <td>@kund.Adress</td>
+                <td>@kund.Postnummer</td>
+                <td>@kund.Postort</td>
+                <td>@kund.Tele</td>
+                <td>@kund.Epost</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br>
+<br>
+    <a class="btn btn-primary" asp-area="" asp-controller="bankapp" asp-action="nykund">Registrera ny kund</a>
+</center>
