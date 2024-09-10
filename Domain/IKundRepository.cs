@@ -7,15 +7,16 @@ public interface IKundRepository
     // Hämta en kund med hjälp av id
     Task<Kund?> GetByIdAsync(Guid id);
 
-    // Task<IEnumerable<Kund>> GetAllAsync();
-    
-    // Task AddAsync(Kund kund);
+    // Lägg till en kund
+    Task AddAsync(Kund kund);
     
     // Task UpdateAsync(Kund kund);
     
     // Task DeleteAsync(Guid id);
 
-    Task<Kund?> ValidateKundAsync(string förnamn, string lösenord);
+    // Lista alla kunder
+    Task<IEnumerable<Kund?>> GetAllAsync();
 
-    Task<Kund?> AddAsync(Kund kund);
+    // Validera en kund
+    Task<Kund?> ValidateKundAsync(string förnamn, string lösenord);
 }

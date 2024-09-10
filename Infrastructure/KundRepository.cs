@@ -40,13 +40,15 @@ public class KundRepository : IKundRepository
         return dataModel == null ? null : new Kund(dataModel.Id, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
     }
 
-    public async Task<Kund?> AddAsync(Kund kund)
+    // Lägg till en kund
+    public async Task AddAsync(Kund kund)
     {
         var dataModel = new KundDataModel
         {
             Id = kund.Id,
             Lösenord = kund.Lösenord,
-            Personnummer = kund.Personnummer,            Förnamn = kund.Förnamn,
+            Personnummer = kund.Personnummer,
+            Förnamn = kund.Förnamn,
             Efternamn = kund.Efternamn,
             Adress = kund.Adress,
             Postnummer = kund.Postnummer,
@@ -55,9 +57,23 @@ public class KundRepository : IKundRepository
             Epost = kund.Epost
         };
 
-        _context.Kunder.Add(dataModel);
+        await _context.Kunder.AddAsync(dataModel);
         await _context.SaveChangesAsync();
+    }
 
-        return new Kund(dataModel.Id, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
+    // Lista alla kunder
+    public async Task<IEnumerable<Kund?>> GetAllAsync()
+    {
+        return await _context.Kunder.Select(k => new Kund(
+            k.Id,
+            k.Lösenord,
+            k.Personnummer,
+            k.Förnamn,
+            k.Efternamn,
+            k.Adress,
+            k.Postnummer,
+            k.Postort,
+            k.Tele,
+            k.Epost)).ToListAsync();
     }
 }

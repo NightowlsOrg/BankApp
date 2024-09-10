@@ -38,9 +38,9 @@ namespace BankApp.Migrations
                 columns: new[] { "Id", "Adress", "Efternamn", "Epost", "Förnamn", "Lösenord", "Personnummer", "Postnummer", "Postort", "Tele" },
                 values: new object[,]
                 {
-                    { new Guid("3d3f73f7-b3d4-4315-9224-531684e9e86c"), "Ankgatan 1", "Ankare", "ankpelle.ankare@ank.se", "Ankpelle", "ankpass", "2011-09-11", "543 21", "Ankby", "070-765 43 21" },
-                    { new Guid("495c8803-cf2d-4cb6-be0b-d157fc22bd44"), "Testgatan 1", "Testare", "test.testare@testby.se", "Test", "pass", "1111-11-11", "111 11", "Testby", "111-111 11 11" },
-                    { new Guid("a6ad1d69-bd29-4a5d-97bf-e5614cd8cd28"), "Knasgatan 1", "Knasare", "knaspelle.knasare@knas.se", "Knaspelle", "knaspass", "1977-04-25", "123 45", "Knasby", "070-123 45 67" }
+                    { new Guid("21023140-d45a-40fe-801f-9d4406736117"), "Knasgatan 1", "Knasare", "knaspelle.knasare@knas.se", "Knaspelle", "knaspass", "1977-04-25", "123 45", "Knasby", "070-123 45 67" },
+                    { new Guid("41e45249-eaaa-4f0c-809a-241fde63d5bb"), "Testgatan 1", "Testare", "test.testare@testby.se", "Test", "pass", "1111-11-11", "111 11", "Testby", "111-111 11 11" },
+                    { new Guid("96b78089-5b94-417a-a72a-c6cbe99efb45"), "Ankgatan 1", "Ankare", "ankpelle.ankare@ank.se", "Ankpelle", "ankpass", "2011-09-11", "543 21", "Ankby", "070-765 43 21" }
                 });
         }
 
