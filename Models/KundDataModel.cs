@@ -7,17 +7,17 @@ public class KundDataModel
     public Guid Id { get; set; }
 
     [Required]
-    public string? Lösenord { get; set; }
+    public string Lösenord { get; set; }
 
     [Required]
-    public string? Personnummer { get; set; }
+    public string Personnummer { get; set; } = string.Empty;
 
     [Required]
     [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Använd endast bokstäver")]
-    public string? Förnamn { get; set; }
+    public string Förnamn { get; set; } = string.Empty;
 
     [Required]
-    public string? Efternamn { get; set; }
+    public string Efternamn { get; set; } = string.Empty;
 
     [Required]
     public string? Adress { get; set; }

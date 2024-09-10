@@ -4,13 +4,13 @@ namespace BankApp.Application;
 public class KundDTO
 {
     public Guid Id { get; set; }
-    public string Lösenord { get; set; } 
-    public string Personnummer { get; set; } 
-    public string Förnamn { get; set; } 
-    public string Efternamn { get; set; } 
-    public string Adress { get; set; } 
-    public string Postnummer { get; set; } 
-    public string Postort { get; set; } 
-    public string Tele { get; set; } 
-    public string Epost { get; set; } 
+    public string Lösenord { get; set; }
+    public string Personnummer { get; set; } = string.Empty;
+    public string Förnamn { get; set; } = string.Empty;
+    public string Efternamn { get; set; } = string.Empty;
+    public string? Adress { get; set; }
+    public string? Postnummer { get; set; }
+    public string? Postort { get; set; }
+    public string? Tele { get; set; }
+    public string? Epost { get; set; }
 }

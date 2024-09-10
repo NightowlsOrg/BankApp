@@ -41,13 +41,13 @@ public class MinaSidorController : Controller
 
         // Validera om kund finns i databasen.
         var kund = await _kundService.ValidateKundAsync(model.Förnamn, model.Lösenord);
-        if (kund != null)
+        if (kund != null || (model.Förnamn == MockedUsername && model.Lösenord == MockedPassword))
         {
             // Finns kund i databasen, claimas identitet och en kaka sätts för att hålla sessionen aktiv.
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, model.Förnamn),
-                new Claim("KundId", kund.Id.ToString())
+                new Claim("KundId", kund?.Id.ToString() ?? "12345678-1234-1234-1234-123456789ABC")
             };
             
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -57,29 +57,11 @@ public class MinaSidorController : Controller
             return RedirectToAction("start", "minasidor");
         }
 
-        // Mocked user verification
-        if (model.Förnamn == MockedUsername && model.Lösenord == MockedPassword)
-        {
-
-            // Set up the session/cookie for the authenticated user.
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.Name, model.Förnamn),
-                new Claim("KundId", "12345678-1234-1234-1234-123456789ABC".ToString())
-            };
-
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var principal = new ClaimsPrincipal(identity);
-
-            // Normally, here you'd set up the session/cookie for the authenticated user.
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-            return RedirectToAction("start", "minasidor"); // Redirect to a secure area of your application.
-        }
-
         ModelState.AddModelError(string.Empty, "Invalid login attempt."); // Generic error message for security reasons.
         return View(model);
     }
 
+    [Authorize]
     public IActionResult AuthInfo()
     {
         return View();
@@ -96,23 +78,22 @@ public class MinaSidorController : Controller
             CookieAuthenticationDefaults.AuthenticationScheme);
     }
 
-    public IActionResult Start()
+    public async Task<IActionResult> Start()
     {
-        return View();
-    }
-
-    [Authorize]
-    public async Task<IActionResult> KundInfo()
-    {
-        // Hämta kundId/GUID från claim
-        var kundIdClaim = User.Claims.FirstOrDefault(c => c.Type == "KundId")?.Value;
-        if (string.IsNullOrEmpty(kundIdClaim) || !Guid.TryParse(kundIdClaim, out Guid kundId))
+        var kundDTO = await GetKundByClaimAsync();
+        if (kundDTO == null)
         {
             return RedirectToAction("login", "minasidor");
         }
 
-        // Hämta kund från databasen med hjälp av GUID
-        var kundDTO = await _kundService.GetKundByIdAsync(kundId);
+        return View("start", kundDTO.Förnamn);
+    }
+
+    // Hämta kund från databas med hjälp av kund-id från claim
+    [Authorize]
+    public async Task<IActionResult> KundInfo()
+    {
+        var kundDTO = await GetKundByClaimAsync();
         if (kundDTO == null)
         {
             return RedirectToAction("login", "minasidor");
@@ -135,6 +116,17 @@ public class MinaSidorController : Controller
         return View(kundViewModel);
     }
 
+    private async Task<KundDTO?> GetKundByClaimAsync()
+    {
+        var kundIdClaim = User.Claims.FirstOrDefault(c => c.Type == "KundId")?.Value;
+        if (string.IsNullOrEmpty(kundIdClaim) || !Guid.TryParse(kundIdClaim, out Guid kundId))
+        {
+            return null;
+        }
+
+        return await _kundService.GetKundByIdAsync(kundId);
+    }
+
     [HttpPost]
     public IActionResult KundInfo(KundViewModel model)
     {
@@ -149,23 +141,3 @@ public class MinaSidorController : Controller
         return View(model);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
