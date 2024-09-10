@@ -1,10 +1,7 @@
-   using BankApp.Domain;
-    using BankApp.Models;
-    using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+using BankApp.Domain;
+using BankApp.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace BankApp.Infrastructure;
 
 // Implementerar Interface-klassen IKundRepository
@@ -21,21 +18,25 @@ public class KundRepository : IKundRepository
         _context = context;
     }
 
-    public Kund GetKundById(Guid id)
-    {
-        // Finns ingen databas konfigurerad så mockas ett kundobjekt (om programmet startats med att läsa från en databas i Program.cs)
-        return new Kund(id, "lösenord", "1661-05-01", "Infrastructure", "Repository", "Gatan 1", "123 45", "Staden", "070-123 45 67", "epost@domain.se");   // Mock implementation
-    }
+    // public Kund GetKundById(Guid id)
+    // {
+    //     // Finns ingen databas konfigurerad så mockas ett kundobjekt (om programmet startats med att läsa från en databas i Program.cs)
+    //     return new Kund(id, "lösenord", "1661-05-01", "Infrastructure", "Repository", "Gatan 1", "123 45", "Staden", "070-123 45 67", "epost@domain.se");   // Mock implementation
+    // }
 
+    // Hämta en kund med hjälp av id
     public async Task<Kund?> GetByIdAsync(Guid id)
     {
         var dataModel = await _context.Kunder.FindAsync(id);
         return dataModel == null ? null : new Kund(dataModel.Id, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
     }
 
-    public async Task<Kund?> ValidateKundAsync(Kund kund)
+    // Validera en kund med hjälp av förnamn och lösenord
+    public async Task<Kund?> ValidateKundAsync(string förnamn, string lösenord)
     {
-        var dataModel = await _context.Kunder.FirstOrDefaultAsync(k => k.Förnamn == kund.Förnamn && k.Lösenord == kund.Lösenord);
+        var dataModel = await _context.Kunder
+            .FirstOrDefaultAsync(k => k.Förnamn == förnamn && k.Lösenord == lösenord);
+
         return dataModel == null ? null : new Kund(dataModel.Id, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
     }
 
@@ -60,9 +61,3 @@ public class KundRepository : IKundRepository
         return new Kund(dataModel.Id, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
     }
 }
-
-
-
-
-
-

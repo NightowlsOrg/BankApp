@@ -14,18 +14,18 @@ public class KundService : IKundService
         _kundRepository = kundRepository;
     }
  
+     // Hämta en kund från databasen med hjälp av id
    public async Task<KundDTO?> GetKundByIdAsync(Guid id)
     {
         var kund = await _kundRepository.GetByIdAsync(id);
-        return kund == null ? null : new KundDTO { Id = kund.Id, Lösenord = kund.Lösenord, Personnummer = kund.Personnummer, Förnamn = kund.Förnamn, Efternamn = kund.Efternamn, Adress = kund.Adress, Postnummer = kund.Postnummer, Postort = kund.Postort, Tele = kund.Tele, Epost = kund.Epost };
+        return kund == null ? null : MapToKundDTO(kund);
     }
 
-    // ValidateKundAsync används för att validera om kunden finns i databasen
+    // Validera en kund med hjälp av förnamn och lösenord
     public async Task<KundDTO?> ValidateKundAsync(string förnamn, string lösenord)
     {
-        var kund = new Kund(Guid.Empty, lösenord, "", förnamn, "", "", "", "", "", "");
-        var validatedKund = await _kundRepository.ValidateKundAsync(kund);
-        return validatedKund == null ? null : new KundDTO { Id = validatedKund.Id, Lösenord = validatedKund.Lösenord, Personnummer = validatedKund.Personnummer, Förnamn = validatedKund.Förnamn, Efternamn = validatedKund.Efternamn, Adress = validatedKund.Adress, Postnummer = validatedKund.Postnummer, Postort = validatedKund.Postort, Tele = validatedKund.Tele, Epost = validatedKund.Epost };
+        var validatedKund = await _kundRepository.ValidateKundAsync(förnamn, lösenord);
+        return validatedKund == null ? null : MapToKundDTO(validatedKund);
     }
 
     // AddKundAsync används för att lägga till en ny kund i databasen
@@ -35,5 +35,23 @@ public class KundService : IKundService
         var newKund = new Kund(Guid.NewGuid(), kund.Lösenord, kund.Personnummer, kund.Förnamn, kund.Efternamn, kund.Adress, kund.Postnummer, kund.Postort, kund.Tele, kund.Epost);
         await _kundRepository.AddAsync(newKund);
         return new KundDTO { Id = newKund.Id, Lösenord = newKund.Lösenord, Personnummer = newKund.Personnummer, Förnamn = newKund.Förnamn, Efternamn = newKund.Efternamn, Adress = newKund.Adress, Postnummer = newKund.Postnummer, Postort = newKund.Postort, Tele = newKund.Tele, Epost = newKund.Epost };
+    }
+
+    // Mappa Kund-objekt till KundDTO-objekt (Data Transfer Object) för att skicka data mellan lager
+    private KundDTO MapToKundDTO(Kund kund)
+    {
+        return new KundDTO
+        {
+            Id = kund.Id,
+            Lösenord = kund.Lösenord,
+            Personnummer = kund.Personnummer,
+            Förnamn = kund.Förnamn,
+            Efternamn = kund.Efternamn,
+            Adress = kund.Adress,
+            Postnummer = kund.Postnummer,
+            Postort = kund.Postort,
+            Tele = kund.Tele,
+            Epost = kund.Epost
+        };
     }
 }

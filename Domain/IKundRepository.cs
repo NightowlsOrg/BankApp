@@ -4,6 +4,7 @@ namespace BankApp.Domain;
 // Här ska CRUD-metoderna för Kund finnas genom implementation av ett Repository-mönster
 public interface IKundRepository
 {
+    // Hämta en kund med hjälp av id
     Task<Kund?> GetByIdAsync(Guid id);
 
     // Task<IEnumerable<Kund>> GetAllAsync();
@@ -14,7 +15,7 @@ public interface IKundRepository
     
     // Task DeleteAsync(Guid id);
 
-    Task<Kund?> ValidateKundAsync(Kund kund);
+    Task<Kund?> ValidateKundAsync(string förnamn, string lösenord);
 
     Task<Kund?> AddAsync(Kund kund);
 }
