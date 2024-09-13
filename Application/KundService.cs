@@ -48,7 +48,7 @@ public class KundService : IKundService
     }
 
     // Lista alla kunder
-        public async Task<IEnumerable<KundDTO?>> GetAllAsync()
+    public async Task<IEnumerable<KundDTO>> GetAllKunderAsync()
     {
         var kunder = await _kundRepository.GetAllAsync();
         return kunder.Select(MapToKundDTO); // Map returned entities to DTOs
@@ -71,4 +71,28 @@ public class KundService : IKundService
             Epost = kund.Epost
         };
     }
+
+   public async Task UpdateKundAsync(KundDTO kundDTO)
+   {
+       var kund = new Kund(
+            kundDTO.Id,
+            kundDTO.Lösenord,
+            kundDTO.Personnummer,
+            kundDTO.Förnamn,
+            kundDTO.Efternamn,
+            kundDTO.Adress,
+            kundDTO.Postnummer,
+            kundDTO.Postort,
+            kundDTO.Tele,
+            kundDTO.Epost
+        );
+
+       await _kundRepository.UpdateAsync(kund);
+   }
+
+   public async Task DeleteKundAsync(Guid id)
+   {
+       await _kundRepository.DeleteAsync(id);
+   }
+
 }

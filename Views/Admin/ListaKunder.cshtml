@@ -1,9 +1,14 @@
 @model IEnumerable<BankApp.Application.KundDTO>
 
+@{
+    ViewData["Title"] = "Kunder";
+}
+
 <br>
 <center>
     <h2>Kunder</h2>
 </center>
+<br>
 <br>
 <br>
 <center>
@@ -11,7 +16,6 @@
     <thead>
         <tr>
             <th>GUID</th>
-            <th>Lösenord</th>
             <th>Förnamn</th>
             <th>Efternamn</th>
             <th>Personnummer</th>
@@ -20,6 +24,7 @@
             <th>Postort</th>
             <th>Tele</th>
             <th>Epost</th>
+            <th>Lösenord</th>
         </tr>
     </thead>
     <tbody>
@@ -27,7 +32,6 @@
         {
             <tr>
                 <td>@kund.Id</td>
-                <td>@kund.Lösenord</td>
                 <td>@kund.Förnamn</td>
                 <td>@kund.Efternamn</td>
                 <td>@kund.Personnummer</td>
@@ -36,10 +40,16 @@
                 <td>@kund.Postort</td>
                 <td>@kund.Tele</td>
                 <td>@kund.Epost</td>
+                <td>@kund.Lösenord</td>
+                <td>
+                  <a class="btn btn-primary" href="@Url.Action("update", "admin", new { id = kund.Id })">Update</a>
+                  <a class="btn btn-danger" href="@Url.Action("delete", "admin", new { id = kund.Id })">Delete</a>
+                </td>
             </tr>
         }
     </tbody>
 </table>
+<br>
 <br>
 <br>
     <a class="btn btn-primary" asp-area="" asp-controller="bankapp" asp-action="nykund">Registrera ny kund</a>
