@@ -1,0 +1,16 @@
+@model BankApp.Models.KundViewModel
+
+@{
+    ViewData["Title"] = "Ta bort kund";
+}
+
+<h2>Ta bort kund</h2>
+
+<form asp-action="Delete" method="post">
+  <input type="hidden" asp-for="Id" />
+  <p>Vill du verkligen ta bort @Model.Förnamn @Model.Efternamn?</p>
+  <div>
+      <input type="submit" value="Delete" class="btn btn-primary" style="margin-right: 10px;">
+      <a href="@Url.Action("listakunder", "admin")" class="btn btn-primary">Cancel</a>
+  </div>
+</form>

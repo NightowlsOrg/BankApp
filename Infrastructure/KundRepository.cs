@@ -62,7 +62,7 @@ public class KundRepository : IKundRepository
     }
 
     // Lista alla kunder
-    public async Task<IEnumerable<Kund?>> GetAllAsync()
+    public async Task<IEnumerable<Kund>> GetAllAsync()
     {
         return await _context.Kunder.Select(k => new Kund(
             k.Id,
@@ -76,4 +76,32 @@ public class KundRepository : IKundRepository
             k.Tele,
             k.Epost)).ToListAsync();
     }
+
+   public async Task UpdateAsync(Kund kund)
+   {
+       var dataModel = await _context.Kunder.FindAsync(kund.Id);
+       if (dataModel != null)
+       {
+           dataModel.Personnummer = kund.Personnummer;
+           dataModel.Förnamn = kund.Förnamn;
+           dataModel.Efternamn = kund.Efternamn;
+           dataModel.Adress = kund.Adress;
+           dataModel.Postnummer = kund.Postnummer;
+           dataModel.Postort = kund.Postort;
+           dataModel.Tele = kund.Tele;
+           dataModel.Epost = kund.Epost;
+           await _context.SaveChangesAsync();
+       }
+   }
+
+   public async Task DeleteAsync(Guid id)
+   {
+       var dataModel = await _context.Kunder.FindAsync(id);
+       if (dataModel != null)
+       {
+           _context.Kunder.Remove(dataModel);
+           await _context.SaveChangesAsync();
+       }
+   }
+
 }

@@ -1,0 +1,117 @@
+@model BankApp.Models.KundViewModel
+
+@{
+    ViewData["Title"] = "Ny kund";
+}
+
+<br>
+<center>
+  <h2>Uppdatera kundinformation</h2>
+</center>
+<br>
+<br>
+<br>
+@if (!ViewData.ModelState.IsValid)
+{
+  <div>
+    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+    {
+      <p>@error.ErrorMessage</p>
+    }
+  </div>
+}
+
+<div class="container">
+  <div class="row justify-content-center">
+    <form asp-action="update" method="post" style="max-width: 900px; margin-right: -50px;">
+        <input type="hidden" asp-for="Id">
+
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label for="Personnummer"><b>Personnummer:</b></label>
+                <input type="text" class="form-control" id="Personnummer" asp-for="Personnummer">
+                <span asp-validation-for="Personnummer" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-3" style="margin-left: 20px;">
+                <label for="Förnamn"><b>Förnamn:</b></label>
+                <input type="text" class="form-control" id="Förnamn" asp-for="Förnamn">
+                <span asp-validation-for="Förnamn" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-3" style="margin-left: 20px;">
+                <label for="Efternamn"><b>Efternamn:</b></label>
+                <input type="text" class="form-control" id="Efternamn" asp-for="Efternamn">
+                <span asp-validation-for="Efternamn" class="text-danger"></span>
+            </div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label for="Adress"><b>Adress:</b></label>
+                <input type="text" class="form-control" id="Adress" asp-for="Adress">
+                <span asp-validation-for="Adress" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-3" style="margin-left: 20px;">
+                <label for="Postnummer"><b>Postnummer:</b></label>
+                <input type="text" class="form-control" id="Postnummer" asp-for="Postnummer">
+                <span asp-validation-for="Postnummer" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-3" style="margin-left: 20px;">
+                <label for="Postort"><b>Postort:</b></label>
+                <input type="text" class="form-control" id="Postort" asp-for="Postort">
+                <span asp-validation-for="Postort" class="text-danger"></span>
+            </div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label for="Tele"><b>Tele:</b></label>
+                <input type="text" class="form-control" id="Tele" asp-for="Tele">
+                <span asp-validation-for="Tele" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-4" style="margin-left: 20px;">
+                <label for="Epost"><b>Epost:</b></label>
+                <input type="text" class="form-control" id="Epost" asp-for="Epost">
+                <span asp-validation-for="Epost" class="text-danger"></span>
+            </div>
+        </div>
+        
+        <br>
+        <br>
+        <br>
+
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label for="Lösenord"><b>Lösenord:</b></label>
+                <input type="text" class="form-control" id="Lösenord" asp-for="Lösenord">
+                <span asp-validation-for="Lösenord" class="text-danger"></span>
+            </div>
+          </div>
+
+        <br>
+        <br>
+        <br>
+
+        <div class="text-center" style="margin-right: 200px;">
+            <input type="submit" value="Save" class="btn btn-primary" style="margin-right: 10px;">
+            <a href="@Url.Action("listakunder", "admin")" class="btn btn-primary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
