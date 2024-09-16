@@ -33,6 +33,7 @@ public class KundService : IKundService
     {
         var kund = new Kund(
             Guid.NewGuid(),
+            kundDTO.IsAdmin,
             kundDTO.Lösenord,
             kundDTO.Personnummer,
             kundDTO.Förnamn,
@@ -60,6 +61,7 @@ public class KundService : IKundService
         return new KundDTO
         {
             Id = kund.Id,
+            IsAdmin = kund.IsAdmin,
             Lösenord = kund.Lösenord,
             Personnummer = kund.Personnummer,
             Förnamn = kund.Förnamn,
@@ -76,6 +78,7 @@ public class KundService : IKundService
    {
        var kund = new Kund(
             kundDTO.Id,
+            kundDTO.IsAdmin,
             kundDTO.Lösenord,
             kundDTO.Personnummer,
             kundDTO.Förnamn,

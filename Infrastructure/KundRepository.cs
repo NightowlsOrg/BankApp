@@ -28,7 +28,7 @@ public class KundRepository : IKundRepository
     public async Task<Kund?> GetByIdAsync(Guid id)
     {
         var dataModel = await _context.Kunder.FindAsync(id);
-        return dataModel == null ? null : new Kund(dataModel.Id, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
+        return dataModel == null ? null : new Kund(dataModel.Id, dataModel.IsAdmin, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
     }
 
     // Validera en kund med hjälp av förnamn och lösenord
@@ -37,7 +37,7 @@ public class KundRepository : IKundRepository
         var dataModel = await _context.Kunder
             .FirstOrDefaultAsync(k => k.Förnamn == förnamn && k.Lösenord == lösenord);
 
-        return dataModel == null ? null : new Kund(dataModel.Id, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
+        return dataModel == null ? null : new Kund(dataModel.Id, dataModel.IsAdmin, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
     }
 
     // Lägg till en kund
@@ -46,6 +46,7 @@ public class KundRepository : IKundRepository
         var dataModel = new KundDataModel
         {
             Id = kund.Id,
+            IsAdmin = kund.IsAdmin,
             Lösenord = kund.Lösenord,
             Personnummer = kund.Personnummer,
             Förnamn = kund.Förnamn,
@@ -66,6 +67,7 @@ public class KundRepository : IKundRepository
     {
         return await _context.Kunder.Select(k => new Kund(
             k.Id,
+            k.IsAdmin,
             k.Lösenord,
             k.Personnummer,
             k.Förnamn,
@@ -82,15 +84,17 @@ public class KundRepository : IKundRepository
        var dataModel = await _context.Kunder.FindAsync(kund.Id);
        if (dataModel != null)
        {
-           dataModel.Personnummer = kund.Personnummer;
-           dataModel.Förnamn = kund.Förnamn;
-           dataModel.Efternamn = kund.Efternamn;
-           dataModel.Adress = kund.Adress;
-           dataModel.Postnummer = kund.Postnummer;
-           dataModel.Postort = kund.Postort;
-           dataModel.Tele = kund.Tele;
-           dataModel.Epost = kund.Epost;
-           await _context.SaveChangesAsync();
+            dataModel.IsAdmin = kund.IsAdmin;
+            dataModel.Personnummer = kund.Personnummer;
+            dataModel.Förnamn = kund.Förnamn;
+            dataModel.Efternamn = kund.Efternamn;
+            dataModel.Adress = kund.Adress;
+            dataModel.Postnummer = kund.Postnummer;
+            dataModel.Postort = kund.Postort;
+            dataModel.Tele = kund.Tele;
+            dataModel.Epost = kund.Epost;
+            dataModel.Lösenord = kund.Lösenord;
+            await _context.SaveChangesAsync();
        }
    }
 

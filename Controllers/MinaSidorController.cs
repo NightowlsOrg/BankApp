@@ -47,6 +47,7 @@ public class MinaSidorController : Controller
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, model.Förnamn),
+                new Claim("IsAdmin", kund.IsAdmin.ToString()),
                 new Claim("KundId", kund?.Id.ToString() ?? "12345678-1234-1234-1234-123456789ABC")
             };
             
@@ -102,6 +103,7 @@ public class MinaSidorController : Controller
         var kundViewModel = new KundViewModel
         {
             Id = kundDTO.Id,
+            IsAdmin = kundDTO.IsAdmin,
             Lösenord = kundDTO.Lösenord,         // Obs! Generellt sätt så är det ingen bra idé att visa lösenordet här :)
             Personnummer = kundDTO.Personnummer,
             Förnamn = kundDTO.Förnamn,
@@ -134,10 +136,32 @@ public class MinaSidorController : Controller
         {
             // Save to database or any other logic here
             // return RedirectToAction("Success"); // Redirect to a success page
-            return View(model);
+            return RedirectToAction("index", "bankapp");
         }
 
         // If the model is not valid, return the same view to display errors
         return View(model);
     }
+
+   public async Task<IActionResult> Update(Guid id)
+   {
+       var kund = await _kundService.GetKundByIdAsync(id);
+       if (kund == null) return NotFound();
+
+       var viewModel = new KundViewModel { Id = kund.Id, IsAdmin = kund.IsAdmin, Personnummer = kund.Personnummer, Förnamn = kund.Förnamn, Efternamn = kund.Efternamn, Adress = kund.Adress, Postnummer = kund.Postnummer, Postort = kund.Postort, Tele = kund.Tele, Epost = kund.Epost, Lösenord = kund.Lösenord };
+       return View(viewModel);
+   }
+
+   [HttpPost]
+   public async Task<IActionResult> Update(KundViewModel model)
+   {
+       if (ModelState.IsValid)
+       {
+            var kund = new KundDTO { Id = model.Id, IsAdmin = model.IsAdmin, Personnummer = model.Personnummer, Förnamn = model.Förnamn, Efternamn = model.Efternamn, Adress = model.Adress, Postnummer = model.Postnummer, Postort = model.Postort, Tele = model.Tele, Epost = model.Epost, Lösenord = model.Lösenord };
+            await _kundService.UpdateKundAsync(kund);
+            return RedirectToAction("index", "bankapp");
+       }
+       
+       return View(model);
+   }
 }

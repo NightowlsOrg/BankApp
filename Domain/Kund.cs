@@ -4,6 +4,7 @@ namespace BankApp.Domain;
 public class Kund
 {
     public Guid Id { get; private set; }
+    public bool IsAdmin { get; private set; }
     public string Lösenord { get; private set; }
     public string Personnummer { get; set; }
     public string Förnamn { get; set; }
@@ -15,9 +16,10 @@ public class Kund
     public string Epost { get; set; }
 
     // Gör om till primary constructor
-    public Kund(Guid id, string lösenord ,string personnummer, string förnamn, string efternamn, string adress, string postnummer, string postort, string tele, string epost)
+    public Kund(Guid id, bool isAdmin, string lösenord ,string personnummer, string förnamn, string efternamn, string adress, string postnummer, string postort, string tele, string epost)
     {
         Id = id;
+        IsAdmin = isAdmin;
         Lösenord = lösenord;
         Personnummer = personnummer;
         Förnamn = förnamn;

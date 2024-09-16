@@ -6,68 +6,108 @@
 
 <br>
 <center>
-    <h2>Registrering</h2>
+  <h2>Registrering</h2>
 </center>
 <br>
+<br>
+<br>
+@if (!ViewData.ModelState.IsValid)
+{
+  <div>
+    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+    {
+      <p>@error.ErrorMessage</p>
+    }
+  </div>
+}
 
-<form asp-controller="bankapp" asp-action="nykund" method="post">
-<br>
-    <div class="form-group">
-            <label for="Personnummer">Personnummer:</label>
-            <input type="text" class="form-control" id="Personnummer" asp-for="Personnummer" required />
-            <span asp-validation-for="Personnummer" class="text-danger"></span>
-    </div>
-<br>
-    <div class="form-group">
-            <label for="Förnamn">Förnamn:</label>
-            <input type="text" class="form-control" id="Förnamn" asp-for="Förnamn" required />
-            <span asp-validation-for="Förnamn" class="text-danger"></span>
-    </div>
-<br>
-    <div class="form-group">
-            <label for="Efternamn">Efternamn:</label>
-            <input type="text" class="form-control" id="Efternamn" asp-for="Efternamn" required />
-            <span asp-validation-for="Efternamn" class="text-danger"></span>
-    </div>
-<br>
-    <div class="form-group">
-            <label for="Adress">Adress:</label>
-            <input type="text" class="form-control" id="Adress" asp-for="Adress" required />
-            <span asp-validation-for="Adress" class="text-danger"></span>
-    </div>
-<br>
-    <div class="form-group">
-            <label for="Postnummer">Postnummer:</label>
-            <input type="text" class="form-control" id="Postnummer" asp-for="Postnummer" required />
-            <span asp-validation-for="Postnummer" class="text-danger"></span>
-    </div>
-<br>
-    <div class="form-group">
-            <label for="Postort">Postort:</label>
-            <input type="text" class="form-control" id="Postort" asp-for="Postort" required />
-            <span asp-validation-for="Postort" class="text-danger"></span>
-    </div>
-<br>
-    <div class="form-group">
-            <label for="Tele">Tele:</label>
-            <input type="text" class="form-control" id="Tele" asp-for="Tele" required />
-            <span asp-validation-for="Tele" class="text-danger"></span>
-    </div>
-<br>
-    <div class="form-group">
-            <label for="Epost">Epost:</label>
-            <input type="text" class="form-control" id="Epost" asp-for="Epost" required />
-            <span asp-validation-for="Epost" class="text-danger"></span>
-    </div>
-<br>
-    <div class="form-group">
-            <label for="Lösenord">Lösenord:</label>
-            <input type="text" class="form-control" id="Lösenord" asp-for="Lösenord" required />
-            <span asp-validation-for="Lösenord" class="text-danger"></span>
-    </div>
-<br>
-<br>
-    <button type="submit" class="btn btn-primary">Skicka</button>
+<div class="container">
+  <div class="row justify-content-center">
+    <form asp-controller="bankapp" asp-action="nykund" method="post" style="max-width: 900px; margin-right: -130px;">
+      <input type="hidden" asp-for="IsAdmin" value="false">
+
+      <div class="row">
+        <div class="form-group col-md-3" style="margin-left: 20px;">
+          <label for="Personnummer"><b>Personnummer:</b></label>
+          <input type="text" class="form-control" id="Personnummer" asp-for="Personnummer" required>
+          <span asp-validation-for="Personnummer" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-3" style="margin-left: 20px;">
+          <label for="Förnamn"><b>Förnamn:</b></label>
+          <input type="text" class="form-control" id="Förnamn" asp-for="Förnamn" required>
+          <span asp-validation-for="Förnamn" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-3" style="margin-left: 20px;">
+          <label for="Efternamn"><b>Efternamn:</b></label>
+          <input type="text" class="form-control" id="Efternamn" asp-for="Efternamn" required>
+          <span asp-validation-for="Efternamn" class="text-danger"></span>
+        </div>
+      </div>
+
+    <br>
+    <br>
+    <br>
+
+      <div class="row">
+        <div class="form-group col-md-3" style="margin-left: 20px;">
+          <label for="Adress"><b>Adress:</b></label>
+          <input type="text" class="form-control" id="Adress" asp-for="Adress" required>
+          <span asp-validation-for="Adress" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-3" style="margin-left: 20px;">
+          <label for="Postnummer"><b>Postnummer:</b></label>
+          <input type="text" class="form-control" id="Postnummer" asp-for="Postnummer" required>
+          <span asp-validation-for="Postnummer" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-3" style="margin-left: 20px;">
+          <label for="Postort"><b>Postort:</b></label>
+          <input type="text" class="form-control" id="Postort" asp-for="Postort" required>
+          <span asp-validation-for="Postort" class="text-danger"></span>
+        </div>
+      </div>
+
+    <br>
+    <br>
+    <br>
+
+      <div class="row">
+        <div class="form-group col-md-3" style="margin-left: 20px;">
+          <label for="Tele"><b>Tele:</b></label>
+          <input type="text" class="form-control" id="Tele" asp-for="Tele" required>
+          <span asp-validation-for="Tele" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-6" style="margin-left: 20px; width: calc(50% + 20px);">
+          <label for="Epost"><b>Epost:</b></label>
+          <input type="text" class="form-control" id="Epost" asp-for="Epost" required>
+          <span asp-validation-for="Epost" class="text-danger"></span>
+        </div>
+      </div>
+
+    <br>
+    <br>
+    <br>
+
+      <div class="row">
+        <div class="form-group col-md-3" style="margin-left: 20px;">
+          <label for="Lösenord"><b>Lösenord:</b></label>
+          <input type="password" class="form-control" id="Lösenord" asp-for="Lösenord" required>
+          <span asp-validation-for="Lösenord" class="text-danger"></span>
+        </div>
+      </div>
+
+    <br>
+    <br>
+    <br>
+
+  <div class="text-center" style="margin-right: 160px;">
+    <input type="submit" value="Registrera" class="btn btn-primary" style="margin-right: 10px;">
+    <a href="@Url.Action("index", "bankapp")" class="btn btn-primary">Avbryt</a>
+  </div>
 </form>
 
 <!-- asp-validation -->

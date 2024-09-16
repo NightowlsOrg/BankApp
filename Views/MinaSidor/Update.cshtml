@@ -6,7 +6,7 @@
 
 <br>
 <center>
-  <h2>Uppdatera kundinformation</h2>
+  <h2>Uppdatera min information</h2>
 </center>
 <br>
 <br>
@@ -23,7 +23,7 @@
 
 <div class="container">
   <div class="row justify-content-center">
-    <form asp-controller="admin" asp-action="update" method="post" style="max-width: 900px; margin-right: -130px;">
+    <form asp-controller="minasidor" asp-action="update" method="post" style="max-width: 900px; margin-right: -130px;">
       <input type="hidden" asp-for="Id">
       <input type="hidden" asp-for="IsAdmin">
 
@@ -96,7 +96,7 @@
         <div class="row">
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Lösenord"><b>Lösenord:</b></label>
-            <input type="text" class="form-control" id="Lösenord" asp-for="Lösenord">
+            <input type="password" class="form-control" id="Lösenord" asp-for="Lösenord">
             <span asp-validation-for="Lösenord" class="text-danger"></span>
           </div>
         </div>
@@ -107,7 +107,7 @@
 
         <div class="text-center" style="margin-right: 160px;">
           <input type="submit" value="Spara" class="btn btn-primary" style="margin-right: 10px;">
-          <a href="@Url.Action("listakunder", "admin")" class="btn btn-primary">Avbryt</a>
+          <a href="@Url.Action("index", "bankapp")" class="btn btn-primary">Avbryt</a>
         </div>
       </form>
   </div>

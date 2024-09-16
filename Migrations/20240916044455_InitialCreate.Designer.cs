@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240910134934_InitialCreate")]
+    [Migration("20240916044455_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -42,6 +42,9 @@ namespace BankApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Lösenord")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -69,11 +72,12 @@ namespace BankApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4131a59f-7dbc-42ce-bef9-01bcdd295f9f"),
+                            Id = new Guid("cd7677b3-0f9b-4a90-95dc-fb2289adfdfb"),
                             Adress = "Knasgatan 1",
                             Efternamn = "Knasare",
                             Epost = "knaspelle.knasare@knas.se",
                             Förnamn = "Knaspelle",
+                            IsAdmin = false,
                             Lösenord = "knaspass",
                             Personnummer = "1977-04-25",
                             Postnummer = "123 45",
@@ -82,11 +86,12 @@ namespace BankApp.Migrations
                         },
                         new
                         {
-                            Id = new Guid("529b007e-ba19-408a-936c-bae7f44c5ed3"),
+                            Id = new Guid("e942715d-6de8-4289-91c4-fe13f5a7588a"),
                             Adress = "Ankgatan 1",
                             Efternamn = "Ankare",
                             Epost = "ankpelle.ankare@ank.se",
                             Förnamn = "Ankpelle",
+                            IsAdmin = false,
                             Lösenord = "ankpass",
                             Personnummer = "2011-09-11",
                             Postnummer = "543 21",
@@ -95,11 +100,12 @@ namespace BankApp.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ecc81574-0840-416f-a8c5-848a56da679e"),
+                            Id = new Guid("6018c2ba-99b6-4c8f-8caa-7c240b7c6e47"),
                             Adress = "Testgatan 1",
                             Efternamn = "Testare",
                             Epost = "test.testare@testby.se",
                             Förnamn = "Test",
+                            IsAdmin = false,
                             Lösenord = "pass",
                             Personnummer = "1111-11-11",
                             Postnummer = "111 11",

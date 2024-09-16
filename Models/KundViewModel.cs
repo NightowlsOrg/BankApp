@@ -3,6 +3,7 @@ namespace BankApp.Models;
 public class KundViewModel
 {
     public Guid Id { get; set; }
+    public bool IsAdmin { get; set; }
     public string Lösenord { get; set; } = string.Empty;
     public string Personnummer { get; set; } = string.Empty;
     public string Förnamn { get; set; } = string.Empty;

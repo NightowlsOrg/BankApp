@@ -19,9 +19,14 @@
                 <ul class="navbar-nav ml-auto"> 
                     @if (Context?.User?.Identity?.IsAuthenticated == true)
                     {
-                        <li class="nav-item">
-                            <a class="btn btn-warning" asp-area="" asp-controller="admin" asp-action="listakunder">Admin</a>
-                        </li>
+                        var isAdminClaim = Context.User.FindFirst("IsAdmin")?.Value;
+                        if (bool.TryParse(isAdminClaim, out bool isAdmin) && isAdmin)
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-warning" asp-area="" asp-controller="admin" asp-action="listakunder">Admin</a>
+                            </li>
+                        }
+                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="minasidor" asp-action="kundinfo">Mina sidor</a>
                         </li>

@@ -7,6 +7,9 @@ public class KundDataModel
     public Guid Id { get; set; }
 
     [Required]
+    public bool IsAdmin { get; set; }
+
+    [Required]
     public string Lösenord { get; set; }
 
     [Required]

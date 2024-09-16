@@ -4,6 +4,7 @@ namespace BankApp.Application;
 public class KundDTO
 {
     public Guid Id { get; set; }
+    public bool IsAdmin { get; set; }
     public string Lösenord { get; set; }
     public string Personnummer { get; set; } = string.Empty;
     public string Förnamn { get; set; } = string.Empty;
