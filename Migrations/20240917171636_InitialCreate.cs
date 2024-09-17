@@ -17,7 +17,7 @@ namespace BankApp.Migrations
                 name: "Kunder",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    KundId = table.Column<Guid>(type: "TEXT", nullable: false),
                     IsAdmin = table.Column<bool>(type: "INTEGER", nullable: false),
                     Lösenord = table.Column<string>(type: "TEXT", nullable: false),
                     Personnummer = table.Column<string>(type: "TEXT", nullable: false),
@@ -31,36 +31,36 @@ namespace BankApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Kunder", x => x.Id);
+                    table.PrimaryKey("PK_Kunder", x => x.KundId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Sparkonton",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    SparkontoId = table.Column<Guid>(type: "TEXT", nullable: false),
                     KundId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Saldo = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sparkonton", x => x.Id);
+                    table.PrimaryKey("PK_Sparkonton", x => x.SparkontoId);
                     table.ForeignKey(
                         name: "FK_Sparkonton_Kunder_KundId",
                         column: x => x.KundId,
                         principalTable: "Kunder",
-                        principalColumn: "Id",
+                        principalColumn: "KundId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "Kunder",
-                columns: new[] { "Id", "Adress", "Efternamn", "Epost", "Förnamn", "IsAdmin", "Lösenord", "Personnummer", "Postnummer", "Postort", "Tele" },
+                columns: new[] { "KundId", "Adress", "Efternamn", "Epost", "Förnamn", "IsAdmin", "Lösenord", "Personnummer", "Postnummer", "Postort", "Tele" },
                 values: new object[,]
                 {
-                    { new Guid("77f40d45-9c10-4a99-91ce-f34782c3efe7"), "Ankgatan 1", "Ankare", "ankpelle.ankare@ank.se", "Ankpelle", false, "ankpass", "2011-09-11", "543 21", "Ankby", "070-765 43 21" },
-                    { new Guid("ce9a3d12-96cf-428e-9ae7-b46d5509f2f9"), "Testgatan 1", "Testare", "test.testare@testby.se", "Test", false, "pass", "1111-11-11", "111 11", "Testby", "111-111 11 11" },
-                    { new Guid("eeff997c-9a4d-49f3-9f66-9430a8db7025"), "Knasgatan 1", "Knasare", "knaspelle.knasare@knas.se", "Knaspelle", false, "knaspass", "1977-04-25", "123 45", "Knasby", "070-123 45 67" }
+                    { new Guid("004c07d8-8f3d-49fc-9766-8cedcd291c13"), "Knasgatan 1", "Knasare", "knaspelle.knasare@knas.se", "Knaspelle", false, "knaspass", "1977-04-25", "123 45", "Knasby", "070-123 45 67" },
+                    { new Guid("057c0933-21d1-405a-8292-c8801fb09092"), "Testgatan 1", "Testare", "test.testare@testby.se", "Test", false, "pass", "1111-11-11", "111 11", "Testby", "111-111 11 11" },
+                    { new Guid("f5b54980-14e0-4ab4-af96-a861a1ce5c56"), "Ankgatan 1", "Ankare", "ankpelle.ankare@ank.se", "Ankpelle", false, "ankpass", "2011-09-11", "543 21", "Ankby", "070-765 43 21" }
                 });
 
             migrationBuilder.CreateIndex(

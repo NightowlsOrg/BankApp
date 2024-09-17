@@ -15,9 +15,9 @@ public class KundService : IKundService
     }
  
     // Hämta en kund från databasen med hjälp av id
-   public async Task<KundDTO?> GetKundByIdAsync(Guid id)
+   public async Task<KundDTO?> GetKundByIdAsync(Guid kundId)
     {
-        var kund = await _kundRepository.GetByIdAsync(id);
+        var kund = await _kundRepository.GetByIdAsync(kundId);
         return kund == null ? null : MapToKundDTO(kund);
     }
 
@@ -60,7 +60,7 @@ public class KundService : IKundService
     {
         return new KundDTO
         {
-            Id = kund.Id,
+            KundId = kund.KundId,
             IsAdmin = kund.IsAdmin,
             Lösenord = kund.Lösenord,
             Personnummer = kund.Personnummer,
@@ -77,7 +77,7 @@ public class KundService : IKundService
    public async Task UpdateKundAsync(KundDTO kundDTO)
    {
        var kund = new Kund(
-            kundDTO.Id,
+            kundDTO.KundId,
             kundDTO.IsAdmin,
             kundDTO.Lösenord,
             kundDTO.Personnummer,
@@ -93,9 +93,9 @@ public class KundService : IKundService
        await _kundRepository.UpdateAsync(kund);
    }
 
-   public async Task DeleteKundAsync(Guid id)
+   public async Task DeleteKundAsync(Guid kundId)
    {
-       await _kundRepository.DeleteAsync(id);
+       await _kundRepository.DeleteAsync(kundId);
    }
 
 }

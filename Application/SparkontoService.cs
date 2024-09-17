@@ -18,7 +18,7 @@ public class SparkontoService : ISparkontoService
         
         return new SparkontoDTO
         {
-            Id = nyttSparkonto.Id,
+            SparkontoId = nyttSparkonto.SparkontoId,
             KundId = nyttSparkonto.KundId,
             Saldo = nyttSparkonto.Saldo
         };
@@ -29,7 +29,7 @@ public class SparkontoService : ISparkontoService
         var sparkonton = await _sparkontoRepository.GetByKundIdAsync(kundId);
         return sparkonton.Select(sk => new SparkontoDTO
         {
-            Id = sk.Id,
+            SparkontoId = sk.SparkontoId,
             KundId = sk.KundId,
             Saldo = sk.Saldo
         });

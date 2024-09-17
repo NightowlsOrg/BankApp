@@ -5,7 +5,7 @@ namespace BankApp.Domain;
 public interface IKundRepository
 {
     // Hämta en kund med hjälp av id
-    Task<Kund?> GetByIdAsync(Guid id);
+    Task<Kund?> GetByIdAsync(Guid kundId);
 
     // Lägg till en kund
     Task AddAsync(Kund kund);
@@ -14,7 +14,7 @@ public interface IKundRepository
     Task UpdateAsync(Kund kund);
     
     // Ta bort en kund
-    Task DeleteAsync(Guid id);
+    Task DeleteAsync(Guid kundId);
 
     // Lista alla kunder
     Task<IEnumerable<Kund>> GetAllAsync();

@@ -43,7 +43,7 @@ public class BankAppController : Controller
 
         var nyKund = new KundDTO
         {
-            Id = Guid.NewGuid(),
+            KundId = Guid.NewGuid(),
             Lösenord = model.Lösenord,
             Personnummer = model.Personnummer,
             Förnamn = model.Förnamn,
@@ -76,7 +76,7 @@ public class BankAppController : Controller
 
         var nyKund = new KundDTO
         {
-            Id = Guid.NewGuid(),
+            KundId = Guid.NewGuid(),
             IsAdmin = true,
             Lösenord = model.Lösenord,
             Personnummer = model.Personnummer,

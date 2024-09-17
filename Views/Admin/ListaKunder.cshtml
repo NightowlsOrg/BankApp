@@ -32,7 +32,7 @@
         @foreach(var kund in Model)
         {
             <tr>
-                <td>@kund.Id</td>
+                <td>@kund.KundId</td>
                 <td>@kund.IsAdmin</td>
                 <td>@kund.Förnamn</td>
                 <td>@kund.Efternamn</td>
@@ -44,8 +44,8 @@
                 <td>@kund.Epost</td>
                 <td>@kund.Lösenord</td>
                 <td>
-                  <a class="btn btn-primary" href="@Url.Action("update", "admin", new { id = kund.Id })">Uppdatera</a>
-                  <a class="btn btn-danger" href="@Url.Action("delete", "admin", new { id = kund.Id })">Ta bort</a>
+                  <a class="btn btn-primary" href="@Url.Action("update", "admin", new { id = kund.KundId })">Uppdatera</a>
+                  <a class="btn btn-danger" href="@Url.Action("delete", "admin", new { id = kund.KundId })">Ta bort</a>
                 </td>
             </tr>
         }

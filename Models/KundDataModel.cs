@@ -4,7 +4,8 @@ namespace BankApp.Models;
 
 public class KundDataModel
 {
-    public Guid Id { get; set; }
+    [Key]
+    public Guid KundId { get; set; }
 
     [Required]
     public bool IsAdmin { get; set; }

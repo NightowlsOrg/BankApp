@@ -19,7 +19,7 @@ namespace BankApp.Migrations
 
             modelBuilder.Entity("BankApp.Models.KundDataModel", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("KundId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
@@ -62,14 +62,14 @@ namespace BankApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("KundId");
 
                     b.ToTable("Kunder");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("eeff997c-9a4d-49f3-9f66-9430a8db7025"),
+                            KundId = new Guid("004c07d8-8f3d-49fc-9766-8cedcd291c13"),
                             Adress = "Knasgatan 1",
                             Efternamn = "Knasare",
                             Epost = "knaspelle.knasare@knas.se",
@@ -83,7 +83,7 @@ namespace BankApp.Migrations
                         },
                         new
                         {
-                            Id = new Guid("77f40d45-9c10-4a99-91ce-f34782c3efe7"),
+                            KundId = new Guid("f5b54980-14e0-4ab4-af96-a861a1ce5c56"),
                             Adress = "Ankgatan 1",
                             Efternamn = "Ankare",
                             Epost = "ankpelle.ankare@ank.se",
@@ -97,7 +97,7 @@ namespace BankApp.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ce9a3d12-96cf-428e-9ae7-b46d5509f2f9"),
+                            KundId = new Guid("057c0933-21d1-405a-8292-c8801fb09092"),
                             Adress = "Testgatan 1",
                             Efternamn = "Testare",
                             Epost = "test.testare@testby.se",
@@ -113,7 +113,7 @@ namespace BankApp.Migrations
 
             modelBuilder.Entity("BankApp.Models.SparkontoDataModel", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SparkontoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
@@ -123,7 +123,7 @@ namespace BankApp.Migrations
                     b.Property<decimal>("Saldo")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("SparkontoId");
 
                     b.HasIndex("KundId");
 

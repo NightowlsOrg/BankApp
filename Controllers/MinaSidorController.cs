@@ -50,7 +50,7 @@ public class MinaSidorController : Controller
             {
                 new Claim(ClaimTypes.Name, model.Förnamn),
                 new Claim("IsAdmin", kund.IsAdmin.ToString()),
-                new Claim("KundId", kund?.Id.ToString() ?? "12345678-1234-1234-1234-123456789ABC")
+                new Claim("KundId", kund?.KundId.ToString() ?? "12345678-1234-1234-1234-123456789ABC")
             };
             
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -92,12 +92,12 @@ public class MinaSidorController : Controller
         }
 
         // Get Savings Account data for the customer
-        var sparkonton = await _sparkontoService.GetByKundIdAsync(kundDTO.Id);
+        var sparkonton = await _sparkontoService.GetByKundIdAsync(kundDTO.KundId);
         var firstSpartkonto = sparkonton.FirstOrDefault();
 
         var kundViewModel = new KundViewModel
         {
-            Id = kundDTO.Id,
+            KundId = kundDTO.KundId,
             IsAdmin = kundDTO.IsAdmin,
             Lösenord = kundDTO.Lösenord,         // Obs! Generellt sätt så är det ingen bra idé att visa lösenordet här :)
             Personnummer = kundDTO.Personnummer,
@@ -139,12 +139,12 @@ public class MinaSidorController : Controller
         return View(model);
     }
 
-   public async Task<IActionResult> Update(Guid id)
+   public async Task<IActionResult> Update(Guid kundId)
    {
-       var kund = await _kundService.GetKundByIdAsync(id);
+       var kund = await _kundService.GetKundByIdAsync(kundId);
        if (kund == null) return NotFound();
 
-       var viewModel = new KundViewModel { Id = kund.Id, IsAdmin = kund.IsAdmin, Personnummer = kund.Personnummer, Förnamn = kund.Förnamn, Efternamn = kund.Efternamn, Adress = kund.Adress, Postnummer = kund.Postnummer, Postort = kund.Postort, Tele = kund.Tele, Epost = kund.Epost, Lösenord = kund.Lösenord };
+       var viewModel = new KundViewModel { KundId = kund.KundId, IsAdmin = kund.IsAdmin, Personnummer = kund.Personnummer, Förnamn = kund.Förnamn, Efternamn = kund.Efternamn, Adress = kund.Adress, Postnummer = kund.Postnummer, Postort = kund.Postort, Tele = kund.Tele, Epost = kund.Epost, Lösenord = kund.Lösenord };
        return View(viewModel);
    }
 
@@ -153,7 +153,7 @@ public class MinaSidorController : Controller
    {
        if (ModelState.IsValid)
        {
-            var kund = new KundDTO { Id = model.Id, IsAdmin = model.IsAdmin, Personnummer = model.Personnummer, Förnamn = model.Förnamn, Efternamn = model.Efternamn, Adress = model.Adress, Postnummer = model.Postnummer, Postort = model.Postort, Tele = model.Tele, Epost = model.Epost, Lösenord = model.Lösenord };
+            var kund = new KundDTO { KundId = model.KundId, IsAdmin = model.IsAdmin, Personnummer = model.Personnummer, Förnamn = model.Förnamn, Efternamn = model.Efternamn, Adress = model.Adress, Postnummer = model.Postnummer, Postort = model.Postort, Tele = model.Tele, Epost = model.Epost, Lösenord = model.Lösenord };
             await _kundService.UpdateKundAsync(kund);
             return RedirectToAction("index", "bankapp");
        }
@@ -171,7 +171,7 @@ public class MinaSidorController : Controller
         }
 
         // Redirect to opening an account if the customer doesn't have one yet
-        var sparkonton = await _sparkontoService.GetByKundIdAsync(kundDTO.Id);
+        var sparkonton = await _sparkontoService.GetByKundIdAsync(kundDTO.KundId);
         if (!sparkonton.Any() && !kundDTO.IsAdmin)
         {
             TempData["OpenSparkontoMessage"] = "Klicka här för att öppna ett sparkonto och få 1000 kr som välkomstbonus!";
@@ -189,7 +189,7 @@ public class MinaSidorController : Controller
             return RedirectToAction("index", "bankapp");
         }
 
-        await _sparkontoService.OpenSparkontoAsync(kundDTO.Id);
+        await _sparkontoService.OpenSparkontoAsync(kundDTO.KundId);
         TempData["SuccessMessage"] = "Ett sparkonto har öppnats och 1000 kr har satts in på kontot.";
         return RedirectToAction("index", "bankapp");
     }

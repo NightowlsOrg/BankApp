@@ -2,13 +2,13 @@ namespace BankApp.Domain;
 
 public class Sparkonto
 {
-    public Guid Id { get; private set; }
+    public Guid SparkontoId { get; private set; }
     public Guid KundId { get; private set; }
     public decimal Saldo { get; private set; }
 
     public Sparkonto(Guid kundId, decimal initialSaldo)
     {
-        Id = Guid.NewGuid();
+        SparkontoId = Guid.NewGuid();
         KundId = kundId;
         Saldo = initialSaldo;
     }

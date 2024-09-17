@@ -17,9 +17,9 @@ public class SparkontoRepository : ISparkontoRepository
         _context = context;
     }
 
-    public async Task<Sparkonto?> GetByIdAsync(Guid id)
+    public async Task<Sparkonto?> GetByIdAsync(Guid sparkontoId)
     {
-        var sparkonto = await _context.Sparkonton.FindAsync(id);
+        var sparkonto = await _context.Sparkonton.FindAsync(sparkontoId);
         return sparkonto == null ? null : new Sparkonto(sparkonto.KundId, sparkonto.Saldo);
     }
 
@@ -27,7 +27,7 @@ public class SparkontoRepository : ISparkontoRepository
     {
         var dataModel = new SparkontoDataModel
         {
-            Id = sparkonto.Id,
+            SparkontoId = sparkonto.SparkontoId,
             KundId = sparkonto.KundId,
             Saldo = sparkonto.Saldo
         };

@@ -25,10 +25,10 @@ public class KundRepository : IKundRepository
     // }
 
     // Hämta en kund med hjälp av id
-    public async Task<Kund?> GetByIdAsync(Guid id)
+    public async Task<Kund?> GetByIdAsync(Guid kundId)
     {
-        var dataModel = await _context.Kunder.FindAsync(id);
-        return dataModel == null ? null : new Kund(dataModel.Id, dataModel.IsAdmin, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
+        var dataModel = await _context.Kunder.FindAsync(kundId);
+        return dataModel == null ? null : new Kund(dataModel.KundId, dataModel.IsAdmin, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
     }
 
     // Validera en kund med hjälp av förnamn och lösenord
@@ -37,7 +37,7 @@ public class KundRepository : IKundRepository
         var dataModel = await _context.Kunder
             .FirstOrDefaultAsync(k => k.Förnamn == förnamn && k.Lösenord == lösenord);
 
-        return dataModel == null ? null : new Kund(dataModel.Id, dataModel.IsAdmin, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
+        return dataModel == null ? null : new Kund(dataModel.KundId, dataModel.IsAdmin, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
     }
 
     // Lägg till en kund
@@ -45,7 +45,7 @@ public class KundRepository : IKundRepository
     {
         var dataModel = new KundDataModel
         {
-            Id = kund.Id,
+            KundId = kund.KundId,
             IsAdmin = kund.IsAdmin,
             Lösenord = kund.Lösenord,
             Personnummer = kund.Personnummer,
@@ -66,7 +66,7 @@ public class KundRepository : IKundRepository
     public async Task<IEnumerable<Kund>> GetAllAsync()
     {
         return await _context.Kunder.Select(k => new Kund(
-            k.Id,
+            k.KundId,
             k.IsAdmin,
             k.Lösenord,
             k.Personnummer,
@@ -81,7 +81,7 @@ public class KundRepository : IKundRepository
 
    public async Task UpdateAsync(Kund kund)
    {
-       var dataModel = await _context.Kunder.FindAsync(kund.Id);
+       var dataModel = await _context.Kunder.FindAsync(kund.KundId);
        if (dataModel != null)
        {
             dataModel.IsAdmin = kund.IsAdmin;
@@ -98,9 +98,9 @@ public class KundRepository : IKundRepository
        }
    }
 
-   public async Task DeleteAsync(Guid id)
+   public async Task DeleteAsync(Guid kundId)
    {
-       var dataModel = await _context.Kunder.FindAsync(id);
+       var dataModel = await _context.Kunder.FindAsync(kundId);
        if (dataModel != null)
        {
            _context.Kunder.Remove(dataModel);

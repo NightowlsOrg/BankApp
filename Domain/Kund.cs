@@ -3,7 +3,7 @@ namespace BankApp.Domain;
 // I Domain ska objekten upprätthålla sin egen integritet genom att applicera affärsregler (t.ex. RegEx) på set-accessorn.
 public class Kund
 {
-    public Guid Id { get; private set; }
+    public Guid KundId { get; private set; }
     public bool IsAdmin { get; private set; }
     public string Lösenord { get; private set; }
     public string Personnummer { get; set; }
@@ -16,9 +16,9 @@ public class Kund
     public string Epost { get; set; }
 
     // Gör om till primary constructor
-    public Kund(Guid id, bool isAdmin, string lösenord ,string personnummer, string förnamn, string efternamn, string adress, string postnummer, string postort, string tele, string epost)
+    public Kund(Guid kundId, bool isAdmin, string lösenord ,string personnummer, string förnamn, string efternamn, string adress, string postnummer, string postort, string tele, string epost)
     {
-        Id = id;
+        KundId = kundId;
         IsAdmin = isAdmin;
         Lösenord = lösenord;
         Personnummer = personnummer;
