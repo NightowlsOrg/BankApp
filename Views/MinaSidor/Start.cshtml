@@ -5,6 +5,23 @@
 }
 
 <br>
+
+    <center>
+        <h2>Välkommen @Model!</h2>
+    </center>
+
+<br>
+<br>
+<br>
+<br>
+
 <center>
-    <h2>Välkommen @Model!</h2>
+@if (TempData["OpenSparkontoMessage"] != null)
+{
+    <div class="alert alert-warning" style="max-width: 900px;">
+        <h5>@TempData["OpenSparkontoMessage"]</h5>
+    <br>
+        <a asp-action="OpenSparkonto"><h6>Öppna sparkonto</h6></a>
+    </div>
+}
 </center>

@@ -98,6 +98,15 @@
           <input type="password" class="form-control" id="Lösenord" asp-for="Lösenord" readonly>
           <span asp-validation-for="Lösenord" class="text-danger"></span>
         </div>
+
+      @if (!Model.IsAdmin)
+      {
+        <div class="form-group col-md-6" style="margin-left: 260px; width: calc(20% + 50px);">
+          <label for="Saldo"><b>Saldo:</b></label>
+          <input type="text" class="form-control" id="Saldo" value="@Model.Saldo" readonly>
+          <span class="text-danger"></span>
+        </div>
+       }
       </div>
 
     <br>

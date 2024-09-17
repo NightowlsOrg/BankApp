@@ -13,6 +13,8 @@ builder.Services.AddScoped<IKundService, KundService>();
 builder.Services.AddScoped<IKundRepository, KundRepository>();      // Används för att läsa från en databas
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));  // Registrera databasen
 // builder.Services.AddScoped<IKundRepository, KundRepositoryJson>();  // Används för att läsa från en JSON-fil (kunder.json)
+builder.Services.AddScoped<ISparkontoRepository, SparkontoRepository>();
+builder.Services.AddScoped<ISparkontoService, SparkontoService>();
 
 var app = builder.Build();
 

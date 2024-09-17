@@ -69,7 +69,7 @@ namespace BankApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cd7677b3-0f9b-4a90-95dc-fb2289adfdfb"),
+                            Id = new Guid("eeff997c-9a4d-49f3-9f66-9430a8db7025"),
                             Adress = "Knasgatan 1",
                             Efternamn = "Knasare",
                             Epost = "knaspelle.knasare@knas.se",
@@ -83,7 +83,7 @@ namespace BankApp.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e942715d-6de8-4289-91c4-fe13f5a7588a"),
+                            Id = new Guid("77f40d45-9c10-4a99-91ce-f34782c3efe7"),
                             Adress = "Ankgatan 1",
                             Efternamn = "Ankare",
                             Epost = "ankpelle.ankare@ank.se",
@@ -97,7 +97,7 @@ namespace BankApp.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6018c2ba-99b6-4c8f-8caa-7c240b7c6e47"),
+                            Id = new Guid("ce9a3d12-96cf-428e-9ae7-b46d5509f2f9"),
                             Adress = "Testgatan 1",
                             Efternamn = "Testare",
                             Epost = "test.testare@testby.se",
@@ -109,6 +109,36 @@ namespace BankApp.Migrations
                             Postort = "Testby",
                             Tele = "111-111 11 11"
                         });
+                });
+
+            modelBuilder.Entity("BankApp.Models.SparkontoDataModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("KundId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Saldo")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KundId");
+
+                    b.ToTable("Sparkonton");
+                });
+
+            modelBuilder.Entity("BankApp.Models.SparkontoDataModel", b =>
+                {
+                    b.HasOne("BankApp.Models.KundDataModel", "Kund")
+                        .WithMany()
+                        .HasForeignKey("KundId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Kund");
                 });
 #pragma warning restore 612, 618
         }
