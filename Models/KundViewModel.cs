@@ -13,5 +13,5 @@ public class KundViewModel
     public string Postort { get; set; } = string.Empty;
     public string Tele { get; set; } = string.Empty;
     public string Epost { get; set; } = string.Empty;
-    public decimal Saldo { get; set; }
-}
+    public decimal Saldo { get; set; } = -1;
+    }
