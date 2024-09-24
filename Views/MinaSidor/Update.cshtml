@@ -5,29 +5,30 @@
 }
 
 <br>
-<center>
-  <h2>Uppdatera min information</h2>
-</center>
-<br>
-<br>
-<br>
-@if (!ViewData.ModelState.IsValid)
-{
-  <div>
-    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-    {
-      <p>@error.ErrorMessage</p>
-    }
+  <div style="margin-left: 33%;">
+    <h2>Kundinformation</h2>
   </div>
-}
+<br><br><br>
 
 <div class="container">
   <div class="row justify-content-center">
-    <form asp-controller="minasidor" asp-action="update" method="post" style="max-width: 900px; margin-right: -130px;">
+
+    <form asp-controller="minasidor" asp-action="update" style="max-width: 900px; margin: 0 auto;">
+      @if (!ViewData.ModelState.IsValid)
+      {
+        <div>
+          @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+          {
+            <p>@error.ErrorMessage</p>
+          }
+        </div>
+      }
+
       <input type="hidden" asp-for="KundId">
       <input type="hidden" asp-for="IsAdmin">
 
         <div class="row">
+
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Personnummer"><b>Personnummer:</b></label>
             <input type="text" class="form-control" id="Personnummer" asp-for="Personnummer">
@@ -45,13 +46,13 @@
             <input type="text" class="form-control" id="Efternamn" asp-for="Efternamn">
             <span asp-validation-for="Efternamn" class="text-danger"></span>
           </div>
+
         </div>
 
-      <br>
-      <br>
-      <br>
+      <br><br><br>
 
         <div class="row">
+
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Adress"><b>Adress:</b></label>
             <input type="text" class="form-control" id="Adress" asp-for="Adress">
@@ -69,13 +70,13 @@
             <input type="text" class="form-control" id="Postort" asp-for="Postort">
             <span asp-validation-for="Postort" class="text-danger"></span>
           </div>
+
         </div>
 
-      <br>
-      <br>
-      <br>
+      <br><br><br>
 
         <div class="row">
+
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Tele"><b>Tele:</b></label>
             <input type="text" class="form-control" id="Tele" asp-for="Tele">
@@ -87,32 +88,32 @@
             <input type="text" class="form-control" id="Epost" asp-for="Epost">
             <span asp-validation-for="Epost" class="text-danger"></span>
           </div>
+
         </div>
         
-      <br>
-      <br>
-      <br>
+      <br><br><br>
 
         <div class="row">
+
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Lösenord"><b>Lösenord:</b></label>
-            <input type="password" class="form-control" id="Lösenord" asp-for="Lösenord">
+            <input type="password" class="form-control" id="Lösenord" asp-for="Lösenord" required>
             <span asp-validation-for="Lösenord" class="text-danger"></span>
           </div>
+
         </div>
 
-      <br>
-      <br>
-      <br>
+      <br><br><br>
 
         <div class="text-center" style="margin-right: 160px;">
           <input type="submit" value="Spara" class="btn btn-primary" style="margin-right: 10px;">
-          <a href="@Url.Action("index", "bankapp")" class="btn btn-primary">Avbryt</a>
+          <a class="btn btn-primary" href="#" onclick="loadContent('@Url.Action("kundinfo", "minasidor")')">Avbryt</a>
         </div>
-      </form>
+    </form>
   </div>
 </div>
 
+<!-- asp-validation -->
 @section Scripts {
-  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

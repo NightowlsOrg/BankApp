@@ -1,6 +1,6 @@
-namespace BankApp.Application;
+namespace BankApp.Models;
 
-public class SparkontoDTO
+public class CreateSparkontoViewModel
 {
     public Guid KundId { get; set; }
     public Guid SparkontoId { get; set; }

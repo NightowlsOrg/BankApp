@@ -1,8 +1,25 @@
 namespace BankApp.Domain;
 
 public interface ISparkontoRepository
-{
-    Task<Sparkonto?> GetByIdAsync(Guid kundId); // sparkontoId?
+{  
+    // Hämta en kunds sparkonto
+    Task<Sparkonto?> GetByKundIdAsync(Guid kundId);
+    
+    // Hämta ett sparkonto
+    Task<Sparkonto?> GetByIdAsync(Guid sparkontoId);
+
+    // Lägg till ett sparkonto
     Task AddAsync(Sparkonto sparkonto);
-    Task<IEnumerable<Sparkonto>> GetByKundIdAsync(Guid kundId);
+
+    // Hämta saldo för sparkonto
+    Task<decimal> GetSaldoAsync(Guid sparkontoId);
+
+    // Insättning på sparkonto
+    Task DepositAsync(Guid sparkontoId, decimal belopp);
+
+    // Uttag från sparkonto
+    Task UttagAsync(Guid sparkontoId, decimal belopp);
+
+    // Uppdatera sparkonto
+    Task UpdateAsync(Sparkonto sparkonto);
 }

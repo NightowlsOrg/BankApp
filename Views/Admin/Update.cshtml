@@ -8,9 +8,8 @@
 <center>
   <h2>Uppdatera kundinformation</h2>
 </center>
-<br>
-<br>
-<br>
+<br><br><br>
+
 @if (!ViewData.ModelState.IsValid)
 {
   <div>
@@ -28,6 +27,7 @@
       <input type="hidden" asp-for="IsAdmin">
 
         <div class="row">
+
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Personnummer"><b>Personnummer:</b></label>
             <input type="text" class="form-control" id="Personnummer" asp-for="Personnummer">
@@ -45,13 +45,13 @@
             <input type="text" class="form-control" id="Efternamn" asp-for="Efternamn">
             <span asp-validation-for="Efternamn" class="text-danger"></span>
           </div>
+
         </div>
 
-      <br>
-      <br>
-      <br>
+      <br><br><br>
 
         <div class="row">
+
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Adress"><b>Adress:</b></label>
             <input type="text" class="form-control" id="Adress" asp-for="Adress">
@@ -69,13 +69,13 @@
             <input type="text" class="form-control" id="Postort" asp-for="Postort">
             <span asp-validation-for="Postort" class="text-danger"></span>
           </div>
+
         </div>
 
-      <br>
-      <br>
-      <br>
+      <br><br><br>
 
         <div class="row">
+
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Tele"><b>Tele:</b></label>
             <input type="text" class="form-control" id="Tele" asp-for="Tele">
@@ -87,23 +87,22 @@
             <input type="text" class="form-control" id="Epost" asp-for="Epost">
             <span asp-validation-for="Epost" class="text-danger"></span>
           </div>
+
         </div>
         
-      <br>
-      <br>
-      <br>
+      <br><br><br>
 
         <div class="row">
+
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Lösenord"><b>Lösenord:</b></label>
             <input type="text" class="form-control" id="Lösenord" asp-for="Lösenord">
             <span asp-validation-for="Lösenord" class="text-danger"></span>
           </div>
+          
         </div>
 
-      <br>
-      <br>
-      <br>
+      <br><br><br>
 
         <div class="text-center" style="margin-right: 160px;">
           <input type="submit" value="Spara" class="btn btn-primary" style="margin-right: 10px;">

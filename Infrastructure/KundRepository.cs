@@ -4,40 +4,54 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankApp.Infrastructure;
 
+// Repository pattern
 // Implementerar Interface-klassen IKundRepository
-// Registrera IKundRepository som en scoped service i Program.cs
-// Infrastructure är tredje och sista stället att mocka kundobjektet
-// Här ska databasen anslutas
+// Registrera IKundRepository som en scoped service i Dependency Injection-containern (Program.cs)
 public class KundRepository : IKundRepository
 {
-
     private readonly AppDbContext _context;
 
+    // Kan göras om till primary constructor
     public KundRepository(AppDbContext context)
     {
         _context = context;
     }
 
-    // public Kund GetKundById(Guid id)
-    // {
-    //     // Finns ingen databas konfigurerad så mockas ett kundobjekt (om programmet startats med att läsa från en databas i Program.cs)
-    //     return new Kund(id, "lösenord", "1661-05-01", "Infrastructure", "Repository", "Gatan 1", "123 45", "Staden", "070-123 45 67", "epost@domain.se");   // Mock implementation
-    // }
-
-    // Hämta en kund med hjälp av id
+    // Hämta en kund med id
     public async Task<Kund?> GetByIdAsync(Guid kundId)
     {
         var dataModel = await _context.Kunder.FindAsync(kundId);
-        return dataModel == null ? null : new Kund(dataModel.KundId, dataModel.IsAdmin, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
+        return dataModel == null ? null : new Kund(
+            dataModel.KundId,
+            dataModel.IsAdmin,
+            dataModel.Lösenord,
+            dataModel.Personnummer,
+            dataModel.Förnamn,
+            dataModel.Efternamn,
+            dataModel.Adress,
+            dataModel.Postnummer,
+            dataModel.Postort,
+            dataModel.Tele,
+            dataModel.Epost);
     }
 
+    // SKA BORT
     // Validera en kund med hjälp av förnamn och lösenord
     public async Task<Kund?> ValidateKundAsync(string förnamn, string lösenord)
     {
-        var dataModel = await _context.Kunder
-            .FirstOrDefaultAsync(k => k.Förnamn == förnamn && k.Lösenord == lösenord);
-
-        return dataModel == null ? null : new Kund(dataModel.KundId, dataModel.IsAdmin, dataModel.Lösenord, dataModel.Personnummer, dataModel.Förnamn, dataModel.Efternamn, dataModel.Adress, dataModel.Postnummer, dataModel.Postort, dataModel.Tele, dataModel.Epost);
+        var dataModel = await _context.Kunder.FirstOrDefaultAsync(k => k.Förnamn == förnamn && k.Lösenord == lösenord);
+        return dataModel == null ? null : new Kund(
+            dataModel.KundId,
+            dataModel.IsAdmin,
+            dataModel.Lösenord,
+            dataModel.Personnummer,
+            dataModel.Förnamn,
+            dataModel.Efternamn,
+            dataModel.Adress,
+            dataModel.Postnummer,
+            dataModel.Postort,
+            dataModel.Tele,
+            dataModel.Epost);
     }
 
     // Lägg till en kund
@@ -58,7 +72,7 @@ public class KundRepository : IKundRepository
             Epost = kund.Epost
         };
 
-        await _context.Kunder.AddAsync(dataModel);
+        _context.Kunder.Add(dataModel);
         await _context.SaveChangesAsync();
     }
 
@@ -79,11 +93,12 @@ public class KundRepository : IKundRepository
             k.Epost)).ToListAsync();
     }
 
-   public async Task UpdateAsync(Kund kund)
-   {
-       var dataModel = await _context.Kunder.FindAsync(kund.KundId);
-       if (dataModel != null)
-       {
+    // Uppdatera en kund
+    public async Task UpdateAsync(Kund kund)
+    {
+        var dataModel = await _context.Kunder.FindAsync(kund.KundId);
+        if (dataModel != null)
+        {
             dataModel.IsAdmin = kund.IsAdmin;
             dataModel.Personnummer = kund.Personnummer;
             dataModel.Förnamn = kund.Förnamn;
@@ -95,17 +110,17 @@ public class KundRepository : IKundRepository
             dataModel.Epost = kund.Epost;
             dataModel.Lösenord = kund.Lösenord;
             await _context.SaveChangesAsync();
-       }
-   }
+        }
+    }
 
-   public async Task DeleteAsync(Guid kundId)
-   {
-       var dataModel = await _context.Kunder.FindAsync(kundId);
-       if (dataModel != null)
-       {
-           _context.Kunder.Remove(dataModel);
-           await _context.SaveChangesAsync();
-       }
-   }
-
+    // Ta bort en kund
+    public async Task DeleteAsync(Guid kundId)
+    {
+        var dataModel = await _context.Kunder.FindAsync(kundId);
+        if (dataModel != null)
+        {
+            _context.Kunder.Remove(dataModel);
+            await _context.SaveChangesAsync();
+        }
+    }
 }

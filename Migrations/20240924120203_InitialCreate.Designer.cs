@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240917171636_InitialCreate")]
+    [Migration("20240924120203_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -72,7 +72,7 @@ namespace BankApp.Migrations
                     b.HasData(
                         new
                         {
-                            KundId = new Guid("004c07d8-8f3d-49fc-9766-8cedcd291c13"),
+                            KundId = new Guid("302df48f-cc0d-40f7-9f1e-37b450a3dd1a"),
                             Adress = "Knasgatan 1",
                             Efternamn = "Knasare",
                             Epost = "knaspelle.knasare@knas.se",
@@ -86,7 +86,7 @@ namespace BankApp.Migrations
                         },
                         new
                         {
-                            KundId = new Guid("f5b54980-14e0-4ab4-af96-a861a1ce5c56"),
+                            KundId = new Guid("ab204d34-4754-45a1-9c8e-4915c6bc687d"),
                             Adress = "Ankgatan 1",
                             Efternamn = "Ankare",
                             Epost = "ankpelle.ankare@ank.se",
@@ -100,10 +100,10 @@ namespace BankApp.Migrations
                         },
                         new
                         {
-                            KundId = new Guid("057c0933-21d1-405a-8292-c8801fb09092"),
+                            KundId = new Guid("504acd8d-1988-4edc-aaed-770fbdb38503"),
                             Adress = "Testgatan 1",
                             Efternamn = "Testare",
-                            Epost = "test.testare@testby.se",
+                            Epost = "test.testare@test.se",
                             Förnamn = "Test",
                             IsAdmin = false,
                             Lösenord = "pass",
@@ -128,20 +128,34 @@ namespace BankApp.Migrations
 
                     b.HasKey("SparkontoId");
 
-                    b.HasIndex("KundId");
+                    b.HasIndex("KundId")
+                        .IsUnique();
 
                     b.ToTable("Sparkonton");
+
+                    b.HasData(
+                        new
+                        {
+                            SparkontoId = new Guid("6bf3c77f-be64-4203-bfe4-3504661b1f38"),
+                            KundId = new Guid("302df48f-cc0d-40f7-9f1e-37b450a3dd1a"),
+                            Saldo = 999.00m
+                        });
                 });
 
             modelBuilder.Entity("BankApp.Models.SparkontoDataModel", b =>
                 {
                     b.HasOne("BankApp.Models.KundDataModel", "Kund")
-                        .WithMany()
-                        .HasForeignKey("KundId")
+                        .WithOne("Sparkonto")
+                        .HasForeignKey("BankApp.Models.SparkontoDataModel", "KundId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Kund");
+                });
+
+            modelBuilder.Entity("BankApp.Models.KundDataModel", b =>
+                {
+                    b.Navigation("Sparkonto");
                 });
 #pragma warning restore 612, 618
         }

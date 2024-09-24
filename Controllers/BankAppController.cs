@@ -10,6 +10,7 @@ public class BankAppController : Controller
     private readonly ILogger<BankAppController> _logger;
     private readonly IKundService _kundService;
 
+    // Kan göras om till primary constructor
     public BankAppController(ILogger<BankAppController> logger, IKundService kundService)
     {
         _logger = logger;
@@ -38,7 +39,7 @@ public class BankAppController : Controller
     {
         if (!ModelState.IsValid)
         {
-            return View(model); // Return the same view with validation errors.
+            return View(model);
         }
 
         var nyKund = new KundDTO
@@ -71,7 +72,7 @@ public class BankAppController : Controller
     {
         if (!ModelState.IsValid)
         {
-            return View(model); // Return the same view with validation errors.
+            return View(model);
         }
 
         var nyKund = new KundDTO
@@ -98,5 +99,4 @@ public class BankAppController : Controller
     {
         return View(new KundDataModel());
     }
-
 }

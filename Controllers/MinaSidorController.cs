@@ -10,16 +10,12 @@ namespace BankApp.Controllers;
 
 public class MinaSidorController : Controller
 {
-    // Mocked user data
-    private const string MockedUsername = "user";
-    private const string MockedPassword = "pass"; // Note: NEVER hard-code passwords in real applications.
-
     private readonly IKundService _kundService;
     private readonly ISparkontoService _sparkontoService;
 
-    // Inject the service through the ctor
     // Ärver in en instans av IKundService som är definierad i Application
-    // Gör om till primary constructor
+    // Ärver in en instans av ISparkontoService som är definierad i Application
+    // Kan göras om till primary constructor
     public MinaSidorController(IKundService kundService, ISparkontoService sparkontoService)
     {
         _kundService = kundService;
@@ -32,7 +28,7 @@ public class MinaSidorController : Controller
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken] // This ensures that the form is submitted with a valid anti-forgery token to prevent CSRF attacks.
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> LoginAsync(LoginViewModel model)
     {
         // Check model validators
@@ -43,7 +39,7 @@ public class MinaSidorController : Controller
 
         // Validera om kund finns i databasen.
         var kund = await _kundService.ValidateKundAsync(model.Förnamn, model.Lösenord);
-        if (kund != null || (model.Förnamn == MockedUsername && model.Lösenord == MockedPassword))
+        if (kund != null)
         {
             // Finns kund i databasen, claimas identitet och en kaka sätts för att hålla sessionen aktiv.
             var claims = new[]
@@ -60,7 +56,7 @@ public class MinaSidorController : Controller
             return RedirectToAction("start", "minasidor");
         }
 
-        ModelState.AddModelError(string.Empty, "Invalid login attempt."); // Generic error message for security reasons.
+        ModelState.AddModelError(string.Empty, "Felaktigt inloggningsförsök."); // Generiskt felmeddelande pga säkerhetskäl.
         return View(model);
     }
 
@@ -81,7 +77,7 @@ public class MinaSidorController : Controller
             CookieAuthenticationDefaults.AuthenticationScheme);
     }
 
-    // Hämta kund från databas med hjälp av kund-id från claim
+    // Hämta kund från databas med hjälp av kundid från claim
     [Authorize]
     public async Task<IActionResult> KundInfo()
     {
@@ -91,15 +87,14 @@ public class MinaSidorController : Controller
             return RedirectToAction("login", "minasidor");
         }
 
-        // Get Savings Account data for the customer
-        var sparkonton = await _sparkontoService.GetByKundIdAsync(kundDTO.KundId);
-        var firstSpartkonto = sparkonton.FirstOrDefault();
+        // Hämta sparkonto för kund
+        var sparkontoDTO = await _sparkontoService.GetSparkontoByKundIdAsync(kundDTO.KundId);
 
         var kundViewModel = new KundViewModel
         {
             KundId = kundDTO.KundId,
             IsAdmin = kundDTO.IsAdmin,
-            Lösenord = kundDTO.Lösenord,         // Obs! Generellt sätt så är det ingen bra idé att visa lösenordet här :)
+            Lösenord = kundDTO.Lösenord,    // SKA BORT
             Personnummer = kundDTO.Personnummer,
             Förnamn = kundDTO.Förnamn,
             Efternamn = kundDTO.Efternamn,
@@ -108,10 +103,10 @@ public class MinaSidorController : Controller
             Postort = kundDTO.Postort,
             Tele = kundDTO.Tele,
             Epost = kundDTO.Epost,
-            Saldo = firstSpartkonto?.Saldo ?? 0 // Assuming the first account is being checked
+            Saldo = sparkontoDTO?.Saldo ?? -1
         };
 
-        return View(kundViewModel);
+        return PartialView(kundViewModel);
     }
 
     private async Task<KundDTO?> GetKundByClaimAsync()
@@ -130,22 +125,32 @@ public class MinaSidorController : Controller
     {
         if (ModelState.IsValid)
         {
-            // Save to database or any other logic here
-            // return RedirectToAction("Success"); // Redirect to a success page
             return RedirectToAction("index", "bankapp");
         }
 
-        // If the model is not valid, return the same view to display errors
         return View(model);
     }
 
    public async Task<IActionResult> Update(Guid kundId)
    {
-       var kund = await _kundService.GetKundByIdAsync(kundId);
-       if (kund == null) return NotFound();
+        var kund = await _kundService.GetKundByIdAsync(kundId);
+        if (kund == null) return NotFound();
 
-       var viewModel = new KundViewModel { KundId = kund.KundId, IsAdmin = kund.IsAdmin, Personnummer = kund.Personnummer, Förnamn = kund.Förnamn, Efternamn = kund.Efternamn, Adress = kund.Adress, Postnummer = kund.Postnummer, Postort = kund.Postort, Tele = kund.Tele, Epost = kund.Epost, Lösenord = kund.Lösenord };
-       return View(viewModel);
+        var viewModel = new KundViewModel {
+            KundId = kund.KundId, 
+            IsAdmin = kund.IsAdmin, 
+            Personnummer = kund.Personnummer, 
+            Förnamn = kund.Förnamn, 
+            Efternamn = kund.Efternamn, 
+            Adress = kund.Adress, 
+            Postnummer = kund.Postnummer, 
+            Postort = kund.Postort, 
+            Tele = kund.Tele, 
+            Epost = kund.Epost, 
+            Lösenord = kund.Lösenord
+       };
+        
+        return PartialView("update", viewModel);
    }
 
    [HttpPost]
@@ -153,15 +158,31 @@ public class MinaSidorController : Controller
    {
        if (ModelState.IsValid)
        {
-            var kund = new KundDTO { KundId = model.KundId, IsAdmin = model.IsAdmin, Personnummer = model.Personnummer, Förnamn = model.Förnamn, Efternamn = model.Efternamn, Adress = model.Adress, Postnummer = model.Postnummer, Postort = model.Postort, Tele = model.Tele, Epost = model.Epost, Lösenord = model.Lösenord };
-            await _kundService.UpdateKundAsync(kund);
-            return RedirectToAction("index", "bankapp");
-       }
-       
-       return View(model);
-   }
+            var kund = new KundDTO
+            { 
+                KundId = model.KundId, 
+                IsAdmin = model.IsAdmin, 
+                Personnummer = model.Personnummer, 
+                Förnamn = model.Förnamn, 
+                Efternamn = model.Efternamn, 
+                Adress = model.Adress, 
+                Postnummer = model.Postnummer, 
+                Postort = model.Postort, 
+                Tele = model.Tele, 
+                Epost = model.Epost, 
+                Lösenord = model.Lösenord
+            };
 
-    // Sparkonto
+            await _kundService.UpdateKundAsync(kund);
+
+            TempData["SuccessMessage"] = "Dina uppgifter har uppdaterats!";
+            return RedirectToAction("meny", "minasidor");
+
+        }
+
+        return PartialView("update", model);
+    }
+
     public async Task<IActionResult> Start()
     {
         var kundDTO = await GetKundByClaimAsync();
@@ -169,28 +190,51 @@ public class MinaSidorController : Controller
         {
             return RedirectToAction("login", "minasidor");
         }
-
-        // Redirect to opening an account if the customer doesn't have one yet
-        var sparkonton = await _sparkontoService.GetByKundIdAsync(kundDTO.KundId);
-        if (!sparkonton.Any() && !kundDTO.IsAdmin)
-        {
-            TempData["OpenSparkontoMessage"] = "Klicka här för att öppna ett sparkonto och få 1000 kr som välkomstbonus!";
-            return View("start", kundDTO.Förnamn);
-        }
-
+    
         return View("start", kundDTO.Förnamn);
     }
 
-    public async Task<IActionResult> OpenSparkonto()
+    // Skapa ett sparkonto för en kund
+    public IActionResult CreateSparkonto(Guid kundId)
+    {
+        return View(new CreateSparkontoViewModel { KundId = kundId, Saldo = 0 });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> CreateSparkonto(CreateSparkontoViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            var sparkontoDto = new SparkontoDTO
+            {
+                KundId = model.KundId, Saldo = model.Saldo
+            };            
+            await _sparkontoService.CreateSparkontoAsync(model.KundId, sparkontoDto);
+            return RedirectToAction("meny", "minasidor");
+        }
+
+        return View(model);
+    }
+
+    [Authorize]
+    public async Task<IActionResult> Meny()
     {
         var kundDTO = await GetKundByClaimAsync();
         if (kundDTO == null)
         {
-            return RedirectToAction("index", "bankapp");
+            return RedirectToAction("login", "minasidor");
         }
 
-        await _sparkontoService.OpenSparkontoAsync(kundDTO.KundId);
-        TempData["SuccessMessage"] = "Ett sparkonto har öppnats och 1000 kr har satts in på kontot.";
-        return RedirectToAction("index", "bankapp");
+        var sparkontoDTO = await _sparkontoService.GetSparkontoByKundIdAsync(kundDTO.KundId);
+
+        var sparkontoViewModel = new SparkontoViewModel
+        {
+            SparkontoId = sparkontoDTO?.SparkontoId ?? Guid.Empty,
+            Saldo = sparkontoDTO?.Saldo ?? 0,
+            HasSparkonto = sparkontoDTO != null
+        };
+
+        return View("meny", sparkontoViewModel);
     }
 }

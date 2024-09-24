@@ -13,9 +13,9 @@ public class Kund
     public string Postnummer { get; set; }
     public string Postort { get; set; }
     public string Tele { get; set; }
-    public string Epost { get; set; }
+    public string Epost { get; private set; }
 
-    // Gör om till primary constructor
+    // Kan göras om till primary constructor
     public Kund(Guid kundId, bool isAdmin, string lösenord ,string personnummer, string förnamn, string efternamn, string adress, string postnummer, string postort, string tele, string epost)
     {
         KundId = kundId;
@@ -30,5 +30,4 @@ public class Kund
         Tele = tele;
         Epost = epost;
     }
-}	
-
+}
