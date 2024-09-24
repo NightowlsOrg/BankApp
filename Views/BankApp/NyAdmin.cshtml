@@ -1,12 +1,12 @@
 @model BankApp.Models.KundDataModel
 
 @{
-    ViewData["Title"] = "Ny kund";
+    ViewData["Title"] = "Ny admin";
 }
 
 <br>
 <center>
-  <h2>Kundregistrering</h2>
+  <h2>Adminregistrering</h2>
 </center>
     <br><br><br>
     
@@ -22,8 +22,8 @@
 
 <div class="container">
   <div class="row justify-content-center">
-    <form asp-controller="bankapp" asp-action="nykund" method="post" style="max-width: 900px; margin-right: -130px;">
-      <input type="hidden" asp-for="IsAdmin" value="false">
+    <form asp-controller="bankapp" asp-action="nyadmin" method="post" style="max-width: 900px; margin-right: -130px;">
+      <input type="hidden" asp-for="IsAdmin" value="true">
 
       <div class="row">
         <div class="form-group col-md-3" style="margin-left: 20px;">
@@ -96,8 +96,8 @@
     <br><br><br>
 
   <div class="text-center" style="margin-right: 160px;">
-    <input type="submit" value="Registrera" class="btn btn-primary" style="margin-right: 10px;">
-    <a href="@Url.Action("index", "bankapp")" class="btn btn-primary">Avbryt</a>
+    <input type="submit" value="Registrera" class="btn btn-warning" style="margin-right: 10px;">
+    <a href="@Url.Action("index", "bankapp")" class="btn btn-warning">Avbryt</a>
   </div>
 </form>
 

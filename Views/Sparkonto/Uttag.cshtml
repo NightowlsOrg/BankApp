@@ -1,0 +1,32 @@
+@model BankApp.Models.SparkontoViewModel
+
+@{
+    ViewData["Title"] = "Uttag";
+}
+<br>
+
+<div style="display: flex; flex-direction: column; align-items: center; position: relative; left: -7%;">
+  <h2>Uttag</h2>
+</div>
+<br><br><br>
+
+<form asp-action="Uttag" method="post" class="create-form" style="text-align: left; margin-left: 40%">
+  @if (!ViewData.ModelState.IsValid)
+  {
+    <div>
+      @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+      {
+        <p>@error.ErrorMessage</p>
+      }
+    </div>
+  }
+    <div class="form-group" style="width: 30%; margin-left: -9%;" >
+      <input type="text" asp-for="Belopp" class="form-control" style="font-size: 36px;" required />
+      <span asp-validation-for="Belopp" class="text-danger"></span>
+    </div>
+    <br><br>
+  <div style="margin-left: -6%;">
+      <button type="submit" class="btn btn-success" style="margin-right: 10px;">Tag ut</button>
+      <a class="btn btn-danger" href="@Url.Action("meny", "minasidor")">Avbryt</a>
+  </div>
+</form>

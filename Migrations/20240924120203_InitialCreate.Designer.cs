@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240910134934_InitialCreate")]
+    [Migration("20240924120203_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -22,7 +22,7 @@ namespace BankApp.Migrations
 
             modelBuilder.Entity("BankApp.Models.KundDataModel", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("KundId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
@@ -41,6 +41,9 @@ namespace BankApp.Migrations
                     b.Property<string>("Förnamn")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Lösenord")
                         .IsRequired()
@@ -62,18 +65,19 @@ namespace BankApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("KundId");
 
                     b.ToTable("Kunder");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4131a59f-7dbc-42ce-bef9-01bcdd295f9f"),
+                            KundId = new Guid("302df48f-cc0d-40f7-9f1e-37b450a3dd1a"),
                             Adress = "Knasgatan 1",
                             Efternamn = "Knasare",
                             Epost = "knaspelle.knasare@knas.se",
                             Förnamn = "Knaspelle",
+                            IsAdmin = false,
                             Lösenord = "knaspass",
                             Personnummer = "1977-04-25",
                             Postnummer = "123 45",
@@ -82,11 +86,12 @@ namespace BankApp.Migrations
                         },
                         new
                         {
-                            Id = new Guid("529b007e-ba19-408a-936c-bae7f44c5ed3"),
+                            KundId = new Guid("ab204d34-4754-45a1-9c8e-4915c6bc687d"),
                             Adress = "Ankgatan 1",
                             Efternamn = "Ankare",
                             Epost = "ankpelle.ankare@ank.se",
                             Förnamn = "Ankpelle",
+                            IsAdmin = false,
                             Lösenord = "ankpass",
                             Personnummer = "2011-09-11",
                             Postnummer = "543 21",
@@ -95,17 +100,62 @@ namespace BankApp.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ecc81574-0840-416f-a8c5-848a56da679e"),
+                            KundId = new Guid("504acd8d-1988-4edc-aaed-770fbdb38503"),
                             Adress = "Testgatan 1",
                             Efternamn = "Testare",
-                            Epost = "test.testare@testby.se",
+                            Epost = "test.testare@test.se",
                             Förnamn = "Test",
+                            IsAdmin = false,
                             Lösenord = "pass",
                             Personnummer = "1111-11-11",
                             Postnummer = "111 11",
                             Postort = "Testby",
                             Tele = "111-111 11 11"
                         });
+                });
+
+            modelBuilder.Entity("BankApp.Models.SparkontoDataModel", b =>
+                {
+                    b.Property<Guid>("SparkontoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("KundId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Saldo")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("SparkontoId");
+
+                    b.HasIndex("KundId")
+                        .IsUnique();
+
+                    b.ToTable("Sparkonton");
+
+                    b.HasData(
+                        new
+                        {
+                            SparkontoId = new Guid("6bf3c77f-be64-4203-bfe4-3504661b1f38"),
+                            KundId = new Guid("302df48f-cc0d-40f7-9f1e-37b450a3dd1a"),
+                            Saldo = 999.00m
+                        });
+                });
+
+            modelBuilder.Entity("BankApp.Models.SparkontoDataModel", b =>
+                {
+                    b.HasOne("BankApp.Models.KundDataModel", "Kund")
+                        .WithOne("Sparkonto")
+                        .HasForeignKey("BankApp.Models.SparkontoDataModel", "KundId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Kund");
+                });
+
+            modelBuilder.Entity("BankApp.Models.KundDataModel", b =>
+                {
+                    b.Navigation("Sparkonto");
                 });
 #pragma warning restore 612, 618
         }

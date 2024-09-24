@@ -1,7 +1,7 @@
 @model BankApp.Models.KundViewModel
 
 @{
-    ViewData["Title"] = "Kundinfo";
+    ViewData["Title"] = "Uppdatera kund";
 }
 
 <br>
@@ -10,39 +10,40 @@
   </div>
 <br><br><br>
 
-@if (!ViewData.ModelState.IsValid)
-{
-  <div>
-    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-    {
-      <p>@error.ErrorMessage</p>
-    }
-  </div>
-}
-
 <div class="container">
   <div class="row justify-content-center">
 
-    <form asp-controller="minasidor" asp-action="kundinfo" style="max-width: 900px; margin: 0 auto;">
+    <form asp-controller="minasidor" asp-action="update" style="max-width: 900px; margin: 0 auto;">
+      @if (!ViewData.ModelState.IsValid)
+      {
+        <div>
+          @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+          {
+            <p>@error.ErrorMessage</p>
+          }
+        </div>
+      }
+
+      <input type="hidden" asp-for="KundId">
       <input type="hidden" asp-for="IsAdmin">
 
         <div class="row">
 
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Personnummer"><b>Personnummer:</b></label>
-            <input type="text" class="form-control" id="Personnummer" asp-for="Personnummer" readonly>
+            <input type="text" class="form-control" id="Personnummer" asp-for="Personnummer">
             <span asp-validation-for="Personnummer" class="text-danger"></span>
           </div>
 
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Förnamn"><b>Förnamn:</b></label>
-            <input type="text" class="form-control" id="Förnamn" asp-for="Förnamn" readonly>
+            <input type="text" class="form-control" id="Förnamn" asp-for="Förnamn">
             <span asp-validation-for="Förnamn" class="text-danger"></span>
           </div>
 
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Efternamn"><b>Efternamn:</b></label>
-            <input type="text" class="form-control" id="Efternamn" asp-for="Efternamn" readonly>
+            <input type="text" class="form-control" id="Efternamn" asp-for="Efternamn">
             <span asp-validation-for="Efternamn" class="text-danger"></span>
           </div>
 
@@ -54,19 +55,19 @@
 
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Adress"><b>Adress:</b></label>
-            <input type="text" class="form-control" id="Adress" asp-for="Adress" readonly>
+            <input type="text" class="form-control" id="Adress" asp-for="Adress">
             <span asp-validation-for="Adress" class="text-danger"></span>
           </div>
 
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Postnummer"><b>Postnummer:</b></label>
-            <input type="text" class="form-control" id="Postnummer" asp-for="Postnummer" readonly>
+            <input type="text" class="form-control" id="Postnummer" asp-for="Postnummer">
             <span asp-validation-for="Postnummer" class="text-danger"></span>
           </div>
 
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Postort"><b>Postort:</b></label>
-            <input type="text" class="form-control" id="Postort" asp-for="Postort" readonly>
+            <input type="text" class="form-control" id="Postort" asp-for="Postort">
             <span asp-validation-for="Postort" class="text-danger"></span>
           </div>
 
@@ -78,25 +79,25 @@
 
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Tele"><b>Tele:</b></label>
-            <input type="text" class="form-control" id="Tele" asp-for="Tele" readonly>
+            <input type="text" class="form-control" id="Tele" asp-for="Tele">
             <span asp-validation-for="Tele" class="text-danger"></span>
           </div>
 
-          <div class="form-group col-md-6" style="margin-left: 20px; width: calc(50% + 20px);">
+          <div class="form-group col-md-4" style="margin-left: 20px; width: calc(50% + 20px);">
             <label for="Epost"><b>Epost:</b></label>
-            <input type="text" class="form-control" id="Epost" asp-for="Epost" readonly>
+            <input type="text" class="form-control" id="Epost" asp-for="Epost">
             <span asp-validation-for="Epost" class="text-danger"></span>
           </div>
 
         </div>
-
+        
       <br><br><br>
 
         <div class="row">
 
           <div class="form-group col-md-3" style="margin-left: 20px;">
             <label for="Lösenord"><b>Lösenord:</b></label>
-            <input type="password" class="form-control" id="Lösenord" asp-for="Lösenord" readonly>
+            <input type="password" class="form-control" id="Lösenord" asp-for="Lösenord" required>
             <span asp-validation-for="Lösenord" class="text-danger"></span>
           </div>
 
@@ -105,19 +106,9 @@
       <br><br><br>
 
         <div class="text-center" style="margin-right: 160px;">
-          @* <a class="btn btn-primary" href="@Url.Action("update", "minasidor", new { kundId = Model.KundId })">Uppdatera</a> *@
-          <a class="btn btn-primary" href="#" onclick="loadContent('@Url.Action("update", "minasidor", new { kundId = Model.KundId })')">Uppdatera</a>
+          <input type="submit" value="Spara" class="btn btn-primary" style="margin-right: 10px;">
+          <a class="btn btn-primary" href="#" onclick="loadContent('@Url.Action("kundinfo", "minasidor")')">Avbryt</a>
         </div>
-
-      <br><br>
-
-        @if (Model.Saldo == -1)
-        {
-          <div class="text-center" style="margin-right: 160px;">
-            <a href="@Url.Action("createsparkonto", "minasidor", new { kundId = Model.KundId })">Öppna ett sparkonto</a>
-          </div>
-        }
-
     </form>
   </div>
 </div>

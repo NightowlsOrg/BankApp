@@ -1,0 +1,55 @@
+@model BankApp.Models.CreateSparkontoViewModel
+
+@{
+    ViewData["Title"] = "Öppna ett sparkonto";
+}
+
+<br>
+  <center>
+    <h2>Öppna sparkonto</h2>
+  </center>
+<br>
+
+<form asp-action="CreateSparkonto" method="post" class="create-form">
+    @if (!ViewData.ModelState.IsValid)
+    {
+    <div>
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+        <p>@error.ErrorMessage</p>
+        }
+    </div>
+    }
+<center>
+    <input type="hidden" asp-for="KundId" />
+    
+    <div class="form-group">
+        <label asp-for="Saldo" style="font-size: 18px;">Ange önskat saldo:</label>
+        <br><br>
+        <input type="text" asp-for="Saldo" class="form-control" />
+        <span asp-validation-for="Saldo" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success" style="margin-right: 10px;">Skicka</button>
+    <a class="btn btn-danger" href="@Url.Action("meny", "minasidor")">Avbryt</a>
+</form>
+</center>
+
+<style>
+    .create-form {
+        max-width: 300px;       /* Set a max width for the form */
+        margin: auto;           /* Center the form on the page */
+        position: relative;     /* Ensure positioning works with inner elements */
+        top: 50px;              /* Adjust this value as needed to move form down */
+        left: 0px;              /* Adjust this value to move form left */
+    }
+    .form-group {
+        margin-bottom: 15px;    /* Space between form groups */
+        margin-left: 10px;      /* Adjust this for leftward position */
+    }
+    .form-control {
+        width: 100%;            /* Make input fields full width */
+        padding: 10px;          /* Add padding for better touch targets */
+        font-size: 16px;        /* Increase font size */
+    }
+</style>

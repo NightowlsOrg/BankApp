@@ -10,6 +10,7 @@ public class AdminController : Controller
 {
     private readonly IKundService _kundService;
 
+    // Kan göras om till primary constructor
     public AdminController(IKundService kundService)
     {
         _kundService = kundService;
@@ -18,16 +19,40 @@ public class AdminController : Controller
     public async Task<IActionResult> ListaKunder()
     {
         var kunder = await _kundService.GetAllKunderAsync();
-        var viewModel = kunder.Select(k => new KundViewModel { Id = k.Id, Personnummer = k.Personnummer, Förnamn = k.Förnamn, Efternamn = k.Efternamn, Adress = k.Adress, Postnummer = k.Postnummer, Postort = k.Postort, Tele = k.Tele, Epost = k.Epost, Lösenord = k.Lösenord });
+        var viewModel = kunder.Select(k => new KundViewModel { 
+            KundId = k.KundId, 
+            IsAdmin =k.IsAdmin, 
+            Personnummer = k.Personnummer, 
+            Förnamn = k.Förnamn, 
+            Efternamn = k.Efternamn, 
+            Adress = k.Adress, 
+            Postnummer = k.Postnummer, 
+            Postort = k.Postort, 
+            Tele = k.Tele, 
+            Epost = k.Epost, 
+            Lösenord = k.Lösenord });
+            
         return View(kunder);
     }
 
-   public async Task<IActionResult> Update(Guid id)
+   public async Task<IActionResult> Update(Guid kundId)
    {
-       var kund = await _kundService.GetKundByIdAsync(id);
+       var kund = await _kundService.GetKundByIdAsync(kundId);
        if (kund == null) return NotFound();
 
-       var viewModel = new KundViewModel { Id = kund.Id, Personnummer = kund.Personnummer, Förnamn = kund.Förnamn, Efternamn = kund.Efternamn, Adress = kund.Adress, Postnummer = kund.Postnummer, Postort = kund.Postort, Tele = kund.Tele, Epost = kund.Epost, Lösenord = kund.Lösenord };
+       var viewModel = new KundViewModel { 
+        KundId = kund.KundId, 
+        IsAdmin = kund.IsAdmin, 
+        Personnummer = kund.Personnummer, 
+        Förnamn = kund.Förnamn, 
+        Efternamn = kund.Efternamn, 
+        Adress = kund.Adress, 
+        Postnummer = kund.Postnummer, 
+        Postort = kund.Postort, 
+        Tele = kund.Tele, 
+        Epost = kund.Epost, 
+        Lösenord = kund.Lösenord };
+
        return View(viewModel);
    }
 
@@ -36,26 +61,53 @@ public class AdminController : Controller
    {
        if (ModelState.IsValid)
        {
-            var kund = new KundDTO { Id = model.Id, Personnummer = model.Personnummer, Förnamn = model.Förnamn, Efternamn = model.Efternamn, Adress = model.Adress, Postnummer = model.Postnummer, Postort = model.Postort, Tele = model.Tele, Epost = model.Epost, Lösenord = model.Lösenord };
+            var kund = new KundDTO
+            { 
+                KundId = model.KundId, 
+                IsAdmin = model.IsAdmin, 
+                Personnummer = model.Personnummer, 
+                Förnamn = model.Förnamn, 
+                Efternamn = model.Efternamn, 
+                Adress = model.Adress, 
+                Postnummer = model.Postnummer, 
+                Postort = model.Postort, 
+                Tele = model.Tele, 
+                Epost = model.Epost, 
+                Lösenord = model.Lösenord
+            };
+                
             await _kundService.UpdateKundAsync(kund);
-            return RedirectToAction(nameof(ListaKunder));
+            return RedirectToAction("listakunder", "admin");
        }
        
        return View(model);
    }
 
-   public async Task<IActionResult> Delete(Guid id)
-   {
-       var kund = await _kundService.GetKundByIdAsync(id);
-       if (kund == null) return NotFound();
+    public async Task<IActionResult> Delete(Guid kundId)
+    {
+        var kund = await _kundService.GetKundByIdAsync(kundId);
+        if (kund == null) return NotFound();
 
-       return View(new KundViewModel { Id = kund.Id, Personnummer = kund.Personnummer, Förnamn = kund.Förnamn, Efternamn = kund.Efternamn, Adress = kund.Adress, Postnummer = kund.Postnummer, Postort = kund.Postort, Tele = kund.Tele, Epost = kund.Epost, Lösenord = kund.Lösenord });
+        return View(new KundViewModel
+        { 
+            KundId = kund.KundId, 
+            IsAdmin = kund.IsAdmin, 
+            Personnummer = kund.Personnummer, 
+            Förnamn = kund.Förnamn, 
+            Efternamn = kund.Efternamn, 
+            Adress = kund.Adress, 
+            Postnummer = kund.Postnummer, 
+            Postort = kund.Postort, 
+            Tele = kund.Tele, 
+            Epost = kund.Epost, 
+            Lösenord = kund.Lösenord
+        });
    }
 
    [HttpPost, ActionName("Delete")]
-   public async Task<IActionResult> DeleteConfirmed(Guid id)
+   public async Task<IActionResult> DeleteConfirmed(Guid kundId)
    {
-       await _kundService.DeleteKundAsync(id);
-       return RedirectToAction(nameof(ListaKunder));
+        await _kundService.DeleteKundAsync(kundId);
+        return RedirectToAction("listakunder", "admin");
    }
 }
